@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+:root {
+  /* Premium Dark Theme */
+  --background: #09090b;
+  --foreground: #ffffff;
+
+  /* Primary Colors */
+  --primary: #7c3aed;
+  --primary-foreground: #ffffff;
+  --primary-light: #a855f7;
+  --primary-dark: #5b21b6;
+
+  /* Secondary Colors */
+  --secondary: #1e1b4b;
+  --secondary-foreground: #ffffff;
+
+  /* Accent Colors */
+  --accent: #a855f7;
+  --accent-foreground: #ffffff;
+
+  /* Muted Colors */
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+
+  /* Card Colors */
+  --card: #18181b;
+  --card-foreground: #ffffff;
+
+  /* Border Colors */
+  --border: #3f3f46;
+  --input: #27272a;
+  --ring: #7c3aed;
+
+  /* Destructive Colors */
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+
+  /* Success Colors */
+  --success: #22c55e;
+  --success-foreground: #ffffff;
+
+  /* Warning Colors */
+  --warning: #f59e0b;
+  --warning-foreground: #000000;
+
+  /* Gradient Colors */
+  --gradient-from: #7c3aed;
+  --gradient-to: #a855f7;
+
+  /* Glow Colors */
+  --glow-primary: rgba(124, 58, 237, 0.5);
+  --glow-accent: rgba(168, 85, 247, 0.5);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Selection */
+::selection {
+  background: var(--primary);
+  color: var(--foreground);
+}
+
+/* Gradient Text Utility */
+.gradient-text {
+  background: linear-gradient(135deg, var(--gradient-from), var(--gradient-to));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow Effects */
+.glow-primary {
+  box-shadow: 0 0 20px var(--glow-primary);
+}
+
+.glow-accent {
+  box-shadow: 0 0 20px var(--glow-accent);
+}
+
+.glow-text {
+  text-shadow: 0 0 20px var(--glow-primary);
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(24, 24, 27, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Animated Background */
+.animated-gradient {
+  background: linear-gradient(
+    -45deg,
+    var(--background),
+    var(--secondary),
+    var(--primary),
+    var(--accent)
+  );
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Pulse Glow */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px var(--glow-primary); }
+  50% { box-shadow: 0 0 40px var(--glow-accent); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
