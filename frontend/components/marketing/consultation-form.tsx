@@ -54,15 +54,6 @@ export function ConsultationCTA() {
 
   return (
     <>
-      {/* Trigger Button */}
-      <Button
-        onClick={() => setIsOpen(true)}
-        className="fixed top-1/2 -translate-y-1/2 left-6 rotate-90 origin-left bg-violet-600 hover:bg-violet-700"
-      >
-        <Calendar className="w-4 h-4 mr-2" />
-        Book Consultation
-      </Button>
-
       {/* Modal */}
       <AnimatePresence>
         {isOpen && (

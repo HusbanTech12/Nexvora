@@ -45,7 +45,7 @@ export function Navbar() {
             <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-white">HusbanTech</span>
+            <span className="text-xl font-bold text-white">Nexvora</span>
           </Link>
 
           {/* Desktop Navigation */}
