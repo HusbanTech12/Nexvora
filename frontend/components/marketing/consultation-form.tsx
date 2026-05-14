@@ -1,0 +1,213 @@
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Calendar, X, Check, Loader2 } from "lucide-react";
+
+interface FormData {
+  name: string;
+  email: string;
+  company: string;
+  budget: string;
+  message: string;
+}
+
+const formVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
+  exit: { opacity: 0, scale: 0.9, transition: { duration: 0.2 } },
+};
+
+export function ConsultationCTA() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    company: "",
+    budget: "",
+    message: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    setIsSubmitting(false);
+    setIsSuccess(true);
+
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsSuccess(false);
+      setFormData({ name: "", email: "", company: "", budget: "", message: "" });
+    }, 2000);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  return (
+    <>
+      {/* Trigger Button */}
+      <Button
+        onClick={() => setIsOpen(true)}
+        className="fixed top-1/2 -translate-y-1/2 left-6 rotate-90 origin-left bg-violet-600 hover:bg-violet-700"
+      >
+        <Calendar className="w-4 h-4 mr-2" />
+        Book Consultation
+      </Button>
+
+      {/* Modal */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+              onClick={() => setIsOpen(false)}
+            />
+
+            {/* Modal */}
+            <motion.div
+              variants={formVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg glass rounded-2xl border border-zinc-800 p-6 z-50 shadow-2xl shadow-violet-500/20"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="absolute top-4 right-4 w-8 h-8 rounded-lg hover:bg-zinc-800 flex items-center justify-center transition-colors"
+              >
+                <X className="w-5 h-5 text-zinc-400" />
+              </button>
+
+              {isSuccess ? (
+                // Success State
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center py-8"
+                >
+                  <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4">
+                    <Check className="w-8 h-8 text-green-500" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">Booking Sent!</h3>
+                  <p className="text-zinc-400">We&apos;ll contact you within 24 hours.</p>
+                </motion.div>
+              ) : (
+                // Form
+                <>
+                  {/* Header */}
+                  <div className="mb-6">
+                    <h3 className="text-xl font-bold text-white mb-1">Book Free Consultation</h3>
+                    <p className="text-sm text-zinc-400">Tell us about your project</p>
+                  </div>
+
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    {/* Name & Email Row */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm text-zinc-400 mb-1">Name</label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          required
+                          className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors"
+                          placeholder="John Doe"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-zinc-400 mb-1">Email</label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          required
+                          className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors"
+                          placeholder="john@example.com"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Company & Budget Row */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm text-zinc-400 mb-1">Company</label>
+                        <input
+                          type="text"
+                          name="company"
+                          value={formData.company}
+                          onChange={handleChange}
+                          className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors"
+                          placeholder="Your Company"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm text-zinc-400 mb-1">Budget</label>
+                        <select
+                          name="budget"
+                          value={formData.budget}
+                          onChange={handleChange}
+                          className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors"
+                        >
+                          <option value="">Select budget</option>
+                          <option value="500-1000">$500 - $1,000</option>
+                          <option value="1000-3000">$1,000 - $3,000</option>
+                          <option value="3000-5000">$3,000 - $5,000</option>
+                          <option value="5000+">$5,000+</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Message */}
+                    <div>
+                      <label className="block text-sm text-zinc-400 mb-1">Message</label>
+                      <textarea
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        rows={3}
+                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors resize-none"
+                        placeholder="Tell us about your project..."
+                      />
+                    </div>
+
+                    {/* Submit Button */}
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        "Book Consultation"
+                      )}
+                    </Button>
+                  </form>
+                </>
+              )}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
