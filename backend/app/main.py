@@ -45,6 +45,36 @@ class Lead(Base):
     status = Column(String(50), default="new")  # new, contacted, qualified, converted
     created_at = Column(DateTime, default=datetime.utcnow)
 
+# User model (for admin)
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    clerk_id = Column(String(255), unique=True, nullable=False)  # Clerk user ID
+    email = Column(String(255), unique=True, nullable=False)
+    name = Column(String(255), default="")
+    role = Column(String(50), default="admin")  # admin, user
+    created_at = Column(DateTime, default=datetime.utcnow)
+    last_login = Column(DateTime, nullable=True)
+
+# Chat model (for AI conversations)
+class Chat(Base):
+    __tablename__ = "chats"
+    id = Column(Integer, primary_key=True, index=True)
+    session_id = Column(String(255), nullable=False)
+    user_message = Column(Text, nullable=False)
+    bot_response = Column(Text, nullable=False)
+    lead_id = Column(Integer, nullable=True)  # Link to lead if qualified
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+# Analytics model (for tracking)
+class Analytics(Base):
+    __tablename__ = "analytics"
+    id = Column(Integer, primary_key=True, index=True)
+    event_type = Column(String(100), nullable=False)  # page_view, cta_click, lead_created, etc.
+    event_data = Column(Text, default="{}")  # JSON string for event details
+    visitor_id = Column(String(255), nullable=True)  # Anonymous visitor ID
+    created_at = Column(DateTime, default=datetime.utcnow)
+
 # Create tables
 Base.metadata.create_all(bind=engine)
 
@@ -262,6 +292,132 @@ async def export_leads_csv():
             media_type="text/csv",
             headers={"Content-Disposition": "attachment; filename=leads.csv"}
         )
+    finally:
+        db.close()
+
+# Analytics endpoints
+class AnalyticsEvent(BaseModel):
+    event_type: str
+    event_data: Optional[str] = "{}"
+    visitor_id: Optional[str] = None
+
+@app.post("/api/analytics/track")
+async def track_event(event: AnalyticsEvent):
+    db = SessionLocal()
+    try:
+        analytics = Analytics(
+            event_type=event.event_type,
+            event_data=event.event_data,
+            visitor_id=event.visitor_id
+        )
+        db.add(analytics)
+        db.commit()
+        return {"success": True, "message": "Event tracked"}
+    finally:
+        db.close()
+
+@app.get("/api/analytics/events")
+async def get_analytics_events(days: int = 7):
+    db = SessionLocal()
+    try:
+        from datetime import timedelta
+        cutoff = datetime.utcnow() - timedelta(days=days)
+
+        events = db.query(Analytics).filter(
+            Analytics.created_at >= cutoff
+        ).order_by(Analytics.created_at.desc()).all()
+
+        return [
+            {
+                "id": e.id,
+                "event_type": e.event_type,
+                "event_data": e.event_data,
+                "visitor_id": e.visitor_id,
+                "created_at": e.created_at.isoformat()
+            }
+            for e in events
+        ]
+    finally:
+        db.close()
+
+@app.get("/api/analytics/summary")
+async def get_analytics_summary():
+    db = SessionLocal()
+    try:
+        from datetime import timedelta
+        today = datetime.utcnow().date()
+        week_ago = datetime.utcnow() - timedelta(days=7)
+
+        # Count events by type
+        page_views = db.query(Analytics).filter(
+            Analytics.event_type == "page_view"
+        ).count()
+        cta_clicks = db.query(Analytics).filter(
+            Analytics.event_type == "cta_click"
+        ).count()
+        leads_generated = db.query(Lead).count()
+
+        # Weekly comparison
+        this_week_events = db.query(Analytics).filter(
+            Analytics.created_at >= week_ago
+        ).count()
+        last_week_events = db.query(Analytics).filter(
+            Analytics.created_at >= week_ago - timedelta(days=7),
+            Analytics.created_at < week_ago
+        ).count()
+
+        return {
+            "total_leads": leads_generated,
+            "page_views": page_views,
+            "cta_clicks": cta_clicks,
+            "this_week_events": this_week_events,
+            "last_week_events": last_week_events,
+            "growth": this_week_events - last_week_events if last_week_events > 0 else 0
+        }
+    finally:
+        db.close()
+
+# Chat endpoints
+class ChatMessage(BaseModel):
+    session_id: str
+    user_message: str
+    bot_response: str
+    lead_id: Optional[int] = None
+
+@app.post("/api/chats")
+async def save_chat(chat: ChatMessage):
+    db = SessionLocal()
+    try:
+        new_chat = Chat(
+            session_id=chat.session_id,
+            user_message=chat.user_message,
+            bot_response=chat.bot_response,
+            lead_id=chat.lead_id
+        )
+        db.add(new_chat)
+        db.commit()
+        return {"success": True, "message": "Chat saved", "id": new_chat.id}
+    finally:
+        db.close()
+
+@app.get("/api/chats/{session_id}")
+async def get_chat_history(session_id: str):
+    db = SessionLocal()
+    try:
+        chats = db.query(Chat).filter(
+            Chat.session_id == session_id
+        ).order_by(Chat.created_at.asc()).all()
+
+        return [
+            {
+                "id": c.id,
+                "user_message": c.user_message,
+                "bot_response": c.bot_response,
+                "lead_id": c.lead_id,
+                "created_at": c.created_at.isoformat()
+            }
+            for c in chats
+        ]
     finally:
         db.close()
 
