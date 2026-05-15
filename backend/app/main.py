@@ -1,8 +1,11 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr
 from typing import Optional, List
 from datetime import datetime
+import csv
+import io
 import os
 from dotenv import load_dotenv
 import resend
@@ -226,6 +229,39 @@ async def get_leads_stats():
             "consultations": consultations,
             "contacts": contacts
         }
+    finally:
+        db.close()
+
+@app.get("/api/leads/export")
+async def export_leads_csv():
+    db = SessionLocal()
+    try:
+        leads = db.query(Lead).order_by(Lead.created_at.desc()).all()
+
+        # Create CSV
+        output = io.StringIO()
+        writer = csv.writer(output)
+        writer.writerow(["ID", "Name", "Email", "Phone", "Company", "Budget", "Type", "Status", "Created At"])
+
+        for lead in leads:
+            writer.writerow([
+                lead.id,
+                lead.name,
+                lead.email,
+                lead.phone,
+                lead.company,
+                lead.budget,
+                lead.lead_type,
+                lead.status,
+                lead.created_at.isoformat() if lead.created_at else ""
+            ])
+
+        output.seek(0)
+        return StreamingResponse(
+            iter([output.getvalue()]),
+            media_type="text/csv",
+            headers={"Content-Disposition": "attachment; filename=leads.csv"}
+        )
     finally:
         db.close()
 
