@@ -13,14 +13,21 @@ interface FormData {
   message: string;
 }
 
+interface ConsultationCTAProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
 const formVariants: Variants = {
   hidden: { opacity: 0, scale: 0.9 },
   visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
   exit: { opacity: 0, scale: 0.9, transition: { duration: 0.2 } },
 };
 
-export function ConsultationCTA() {
-  const [isOpen, setIsOpen] = useState(false);
+export function ConsultationCTA({ isOpen: externalIsOpen, onClose: externalOnClose }: ConsultationCTAProps) {
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
+  const setIsOpen = externalIsOpen !== undefined ? externalOnClose || (() => {}) : setInternalIsOpen;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState<FormData>({
@@ -35,17 +42,26 @@ export function ConsultationCTA() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch("http://localhost:8000/api/consultation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    setIsSubmitting(false);
-    setIsSuccess(true);
+      if (!response.ok) throw new Error("Failed to submit");
 
-    setTimeout(() => {
-      setIsOpen(false);
-      setIsSuccess(false);
-      setFormData({ name: "", email: "", company: "", budget: "", message: "" });
-    }, 2000);
+      setIsSuccess(true);
+      setTimeout(() => {
+        setIsOpen(false);
+        setIsSuccess(false);
+        setFormData({ name: "", email: "", company: "", budget: "", message: "" });
+      }, 2000);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

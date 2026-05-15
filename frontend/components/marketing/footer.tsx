@@ -1,7 +1,8 @@
 "use client";
 
-import { Sparkles, Globe, Cpu, Users } from "lucide-react";
+import { Globe, Cpu, Users } from "lucide-react";
 import Link from "next/link";
+import { Logo } from "@/components/shared/logo";
 
 export function Footer() {
   return (
@@ -10,12 +11,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div className="md:col-span-2">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold text-white">HusbanTech</span>
-            </Link>
+            <div className="flex items-center gap-2 mb-4">
+              <Logo size="lg" showText={false} />
+            </div>
             <p className="text-zinc-400 text-sm max-w-sm">
               Building AI-powered web systems that help businesses grow faster,
               engage customers smarter, and create premium digital experiences.
@@ -65,8 +63,8 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-white mb-4">Contact</h4>
             <ul className="space-y-2 text-sm text-zinc-400">
-              <li>hello@husbantech.com</li>
-              <li>+1 (555) 123-4567</li>
+              <li>husbantech08@gmail.com</li>
+              <li>+92 323 2774340</li>
             </ul>
             <div className="flex gap-4 mt-4">
               <a
@@ -97,7 +95,7 @@ export function Footer() {
         {/* Bottom */}
         <div className="pt-8 border-t border-zinc-800 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-zinc-500">
-            © 2025 HusbanTech. All rights reserved.
+            © 2025 Nexvora. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-zinc-500">
             <Link href="#" className="hover:text-violet-400 transition-colors">

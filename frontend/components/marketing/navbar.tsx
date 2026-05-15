@@ -2,16 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/shared/logo";
 
 const navLinks = [
   { label: "Home", href: "#" },
   { label: "Services", href: "#services" },
   { label: "Pricing", href: "#pricing" },
   { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "#", action: "contact" },
 ];
 
 export function Navbar() {
@@ -27,6 +27,22 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleNavClick = (link: typeof navLinks[0]) => {
+    if (link.action === "contact") {
+      window.dispatchEvent(new CustomEvent("open-contact-form"));
+    } else if (link.href === "#") {
+      // Home - scroll to top
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (link.href && link.href.length > 1) {
+      // Smooth scroll to section (only if href is more than just "#")
+      const element = document.querySelector(link.href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -41,29 +57,26 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-white">Nexvora</span>
-          </Link>
+          <Logo showText={false} />
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link
+              <button
                 key={link.label}
-                href={link.href}
+                onClick={() => handleNavClick(link)}
                 className="text-sm font-medium text-zinc-400 hover:text-white transition-colors"
               >
                 {link.label}
-              </Link>
+              </button>
             ))}
           </div>
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-4">
-            <Button size="sm">Book Consultation</Button>
+            <Button size="sm" onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))}>
+              Book Consultation
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -90,16 +103,15 @@ export function Navbar() {
             >
               <div className="flex flex-col gap-4">
                 {navLinks.map((link) => (
-                  <Link
+                  <button
                     key={link.label}
-                    href={link.href}
-                    className="text-sm font-medium text-zinc-400 hover:text-white transition-colors py-2"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={() => handleNavClick(link)}
+                    className="text-sm font-medium text-zinc-400 hover:text-white transition-colors py-2 text-left"
                   >
                     {link.label}
-                  </Link>
+                  </button>
                 ))}
-                <Button className="mt-2">Book Consultation</Button>
+                <Button className="mt-2" onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))}>Book Consultation</Button>
               </div>
             </motion.div>
           )}

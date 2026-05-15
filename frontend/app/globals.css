@@ -189,3 +189,22 @@ body {
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
+
+/* Interactive Elements */
+button,
+[role="button"],
+a,
+label[for],
+input[type="checkbox"],
+input[type="radio"],
+select,
+[tabindex]:not([tabindex="-1"]) {
+  cursor: pointer;
+}
+
+/* Hover States */
+button:hover,
+a:hover,
+[role="button"]:hover {
+  cursor: pointer;
+}

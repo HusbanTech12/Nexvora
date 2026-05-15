@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 export function WhatsAppCTA() {
-  const phoneNumber = "1234567890"; // Replace with actual WhatsApp number
+  const phoneNumber = "923232774340";
 
   return (
     <motion.a
