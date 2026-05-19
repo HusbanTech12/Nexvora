@@ -1,6 +1,7 @@
 services:
   - type: web
     name: nexvora-api
+    rootDir: backend
     env: python
     region: virginia
     plan: free
@@ -18,7 +19,9 @@ services:
       - key: TO_EMAIL
         sync: false
       - key: AI_PROVIDER
-        value: gemini
+        value: groq
+      - key: GROQ_API_KEY
+        sync: false
       - key: GEMINI_API_KEY
         sync: false
       - key: GEMINI_MODEL
@@ -31,3 +34,5 @@ services:
         sync: false
       - key: ANTHROPIC_MODEL
         value: claude-3-5-sonnet-20241022
+      - key: CLERK_SECRET_KEY
+        sync: false
