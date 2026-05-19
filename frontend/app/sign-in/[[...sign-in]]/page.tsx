@@ -1,6 +1,8 @@
 import { SignIn } from "@clerk/nextjs";
 import { AnimatedBackground } from "@/components/shared/animated-background";
 
+const CLERK_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || "";
+
 const clerkAppearance = {
   baseTheme: undefined,
   elements: {
@@ -129,6 +131,28 @@ const clerkAppearance = {
 };
 
 export default function SignInPage() {
+  if (!CLERK_PUBLISHABLE_KEY) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-zinc-950 relative overflow-hidden">
+        <AnimatedBackground />
+        <div className="relative z-10 w-full max-w-md px-4 text-center">
+          <div className="glass rounded-2xl p-8 border border-zinc-800">
+            <h2 className="text-xl font-bold text-white mb-4">Authentication Unavailable</h2>
+            <p className="text-zinc-400 mb-6">
+              Clerk authentication is not configured. Please set the required environment variables.
+            </p>
+            <a
+              href="/"
+              className="px-6 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg text-white transition-colors text-sm"
+            >
+              Go to Homepage
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-zinc-950 relative overflow-hidden">
       {/* Animated Particle Background */}
