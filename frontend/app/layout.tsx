@@ -17,6 +17,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nexvora.ai";
+const CLERK_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || "";
 
 export const metadata: Metadata = {
   title: {
@@ -93,8 +94,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  if (!CLERK_PUBLISHABLE_KEY) {
+    return (
+      <html
+        lang="en"
+        className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth`}
+      >
+        <body className="min-h-screen bg-background text-foreground antialiased">
+          <Providers>{children}</Providers>
+        </body>
+      </html>
+    );
+  }
+
   return (
-    <ClerkProvider>
+    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
       <html
         lang="en"
         className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth`}
