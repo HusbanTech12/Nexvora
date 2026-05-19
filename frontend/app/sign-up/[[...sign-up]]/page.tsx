@@ -1,4 +1,4 @@
-import { SignIn } from "@clerk/nextjs";
+import { SignUp } from "@clerk/nextjs";
 import { AnimatedBackground } from "@/components/shared/animated-background";
 
 const clerkAppearance = {
@@ -128,7 +128,7 @@ const clerkAppearance = {
   },
 };
 
-export default function SignInPage() {
+export default function SignUpPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-zinc-950 relative overflow-hidden">
       {/* Animated Particle Background */}
@@ -141,9 +141,9 @@ export default function SignInPage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
       </div>
 
-      {/* Sign In Card */}
+      {/* Sign Up Card */}
       <div className="relative z-10 w-full max-w-md px-4">
-        <SignIn appearance={clerkAppearance} />
+        <SignUp appearance={clerkAppearance} />
       </div>
     </div>
   );

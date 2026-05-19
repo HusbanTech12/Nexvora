@@ -8,6 +8,14 @@
 
 **Tech Stack:** FastAPI (backend) + Next.js (frontend) + OpenRouter API + WebSockets
 
+**Important Implementation Notes:**
+
+- LLM streaming uses chunked character-by-character response (not true SSE) for simplicity
+- Sessions are stored in-memory (lost on restart) — add Redis for production
+- WebSocket has no authentication — add session token validation for production
+- CORS must be configured on WebSocket endpoint
+- Backend URL uses environment variable `NEXT_PUBLIC_API_URL`
+
 ---
 
 ## File Structure
@@ -182,7 +190,6 @@ class LLMHandler:
         api_messages = [{"role": "system", "content": SYSTEM_PROMPT}]
         api_messages.extend(messages[-10:])  # Last 10 messages for context
 
-        # Simulate streaming (actual implementation would use httpx streaming)
         try:
             import httpx
             async with httpx.AsyncClient(timeout=60.0) as client:
@@ -195,12 +202,12 @@ class LLMHandler:
                     json={
                         "model": self.model,
                         "messages": api_messages,
-                        "stream": False
+                        "stream": False  # Using non-streaming, then chunking response manually
                     }
                 )
                 if response.status_code == 200:
                     content = response.json()["choices"][0]["message"]["content"]
-                    # Stream character by character
+                    # Stream character by character for real-time effect
                     for char in content:
                         yield char
                         await asyncio.sleep(0.01)
@@ -227,10 +234,10 @@ class LLMHandler:
             response = responses["contact"]
         else:
             response = responses["default"]
-        
+
         for char in response:
             yield char
-            asyncio.sleep(0.01)
+            await asyncio.sleep(0.01)
 ```
 
 - [ ] **Step 4: Run test to verify it passes**
@@ -485,7 +492,17 @@ from app.websocket_manager import manager
 from app.llm_handler import LLMHandler
 from app.session_manager import session_manager
 from app.lead_qualifier import lead_qualifier
+from fastapi.middleware.cors import CORSMiddleware
 import json
+
+# Add CORS middleware for WebSocket support
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Configure appropriately for production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 llm_handler = LLMHandler()
 ```
@@ -605,7 +622,11 @@ export class ChatWebSocket {
   connect(sessionId: string) {
     this.sessionId = sessionId;
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = `${protocol}//localhost:8000/ws/chat/${sessionId}`;
+    // Use environment variable or fallback to localhost for development
+    const apiUrl = typeof window !== 'undefined'
+      ? (process.env.NEXT_PUBLIC_API_URL || 'localhost:8000')
+      : 'localhost:8000';
+    const wsUrl = `${protocol}//${apiUrl}/ws/chat/${sessionId}`;
 
     this.ws = new WebSocket(wsUrl);
 
@@ -1157,7 +1178,7 @@ git commit -m "feat: add API route for chat session creation"
 **Files:**
 - Modify: `backend/.env`
 
-- [ ] **Step 1: Add OpenRouter API key**
+- [ ] **Step 1: Add API keys**
 
 Add to `backend/.env`:
 
@@ -1166,12 +1187,32 @@ Add to `backend/.env`:
 OPENROUTER_API_KEY=your_openrouter_api_key_here
 ```
 
+Add to `frontend/.env.local`:
+
+```env
+# Backend WebSocket URL (use actual URL in production)
+NEXT_PUBLIC_API_URL=localhost:8000
+```
+
 - [ ] **Step 2: Commit**
 
 ```bash
-git add backend/.env
-git commit -m "chore: add OPENROUTER_API_KEY environment variable"
+git add backend/.env frontend/.env.local
+git commit -m "chore: add API keys environment variables"
 ```
+
+---
+
+## Additional Production Considerations
+
+These items are recommended for production but not required for initial implementation:
+
+- **Add Redis for session storage** — Replace in-memory `SessionManager` with Redis for persistence
+- **Add WebSocket authentication** — Validate session tokens on WebSocket connection
+- **Add rate limiting** — Prevent abuse with per-session rate limits
+- **Add health check endpoint** — `/api/health` for deployment monitoring
+- **Add Pydantic schemas** — Type-safe request/response models in `backend/app/schemas.py`
+- **Add integration tests** — End-to-end tests in `backend/app/tests/test_integration.py`
 
 ---
 
@@ -1188,10 +1229,11 @@ All tasks completed. The AI Assistant now has:
 
 **To test:**
 1. Add your OpenRouter API key to `backend/.env`
-2. Start backend: `cd backend && uvicorn app.main:app --reload`
-3. Start frontend: `cd frontend && npm run dev`
-4. Open the website and click the AI Assistant button
-5. Send a message and see real-time streaming responses
+2. Set `NEXT_PUBLIC_API_URL=localhost:8000` in `frontend/.env.local` (or use your deployed backend URL)
+3. Start backend: `cd backend && uvicorn app.main:app --reload`
+4. Start frontend: `cd frontend && npm run dev`
+5. Open the website and click the AI Assistant button
+6. Send a message and see real-time streaming responses
 
 ---
 

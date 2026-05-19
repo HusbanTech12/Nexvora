@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Calendar, X, Check, Loader2 } from "lucide-react";
+import { useToast } from "@/components/shared/toast";
 
 interface FormData {
   name: string;
@@ -37,13 +38,15 @@ export function ConsultationCTA({ isOpen: externalIsOpen, onClose: externalOnClo
     budget: "",
     message: "",
   });
+  const { success, error } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("http://localhost:8000/api/consultation", {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      const response = await fetch(`${apiUrl}/api/consultation`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -52,13 +55,14 @@ export function ConsultationCTA({ isOpen: externalIsOpen, onClose: externalOnClo
       if (!response.ok) throw new Error("Failed to submit");
 
       setIsSuccess(true);
+      success("Consultation Booked!", "We'll contact you within 24 hours.");
       setTimeout(() => {
         setIsOpen(false);
         setIsSuccess(false);
         setFormData({ name: "", email: "", company: "", budget: "", message: "" });
       }, 2000);
-    } catch (error) {
-      console.error("Error:", error);
+    } catch {
+      error("Booking Failed", "Please try again later.");
     } finally {
       setIsSubmitting(false);
     }

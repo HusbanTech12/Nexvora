@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { X, Check, Loader2, Phone } from "lucide-react";
+import { X, Check, Loader2 } from "lucide-react";
+import { useToast } from "@/components/shared/toast";
 
 interface FormData {
   name: string;
@@ -34,13 +35,15 @@ export function ContactForm({ isOpen, onClose }: ContactFormProps) {
     company: "",
     message: "",
   });
+  const { success, error } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("http://localhost:8000/api/contact", {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+      const response = await fetch(`${apiUrl}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -49,13 +52,14 @@ export function ContactForm({ isOpen, onClose }: ContactFormProps) {
       if (!response.ok) throw new Error("Failed to submit");
 
       setIsSuccess(true);
+      success("Message Sent!", "We'll get back to you within 24 hours.");
       setTimeout(() => {
         onClose();
         setIsSuccess(false);
         setFormData({ name: "", email: "", phone: "", company: "", message: "" });
       }, 2000);
-    } catch (error) {
-      console.error("Error:", error);
+    } catch {
+      error("Submission Failed", "Please try again later.");
     } finally {
       setIsSubmitting(false);
     }

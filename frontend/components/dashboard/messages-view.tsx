@@ -3,26 +3,17 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { MessageSquare, Search, Filter, Mail, Phone, Clock, User } from "lucide-react";
-
-interface Message {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-  lead_type: string;
-  created_at: string;
-}
+import { api, type Lead } from "@/lib/api";
 
 export function MessagesView() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
+  const [selectedMessage, setSelectedMessage] = useState<Lead | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/leads")
-      .then((res) => res.json())
+    api.messages
+      .list()
       .then((data) => {
         setMessages(data);
         setLoading(false);
@@ -111,7 +102,9 @@ export function MessagesView() {
                     className={`inline-block mt-2 px-2 py-0.5 rounded text-xs ${
                       msg.lead_type === "consultation"
                         ? "bg-violet-500/20 text-violet-400"
-                        : "bg-zinc-700 text-zinc-300"
+                        : msg.lead_type === "ai_qualified"
+                          ? "bg-green-500/20 text-green-400"
+                          : "bg-zinc-700 text-zinc-300"
                     }`}
                   >
                     {msg.lead_type}

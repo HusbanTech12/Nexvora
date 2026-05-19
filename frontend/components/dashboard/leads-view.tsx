@@ -3,29 +3,9 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Users, MessageSquare, TrendingUp, CheckCircle, XCircle, Clock, Eye } from "lucide-react";
-
-interface Lead {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  company: string;
-  budget: string;
-  message: string;
-  lead_type: string;
-  status: string;
-  created_at: string;
-}
-
-interface Stats {
-  total: number;
-  new: number;
-  contacted: number;
-  qualified: number;
-  converted: number;
-  consultations: number;
-  contacts: number;
-}
+import { api, type Lead, type LeadStats } from "@/lib/api";
+import { LeadDetailModal } from "@/components/dashboard/lead-detail-modal";
+import { useToast } from "@/components/shared/toast";
 
 const statusColors: Record<string, string> = {
   new: "bg-blue-500/20 text-blue-400",
@@ -43,9 +23,12 @@ const statusLabels: Record<string, string> = {
 
 export function LeadsView() {
   const [leads, setLeads] = useState<Lead[]>([]);
-  const [stats, setStats] = useState<Stats | null>(null);
+  const [stats, setStats] = useState<LeadStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>("all");
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const { success, error: showError } = useToast();
 
   useEffect(() => {
     fetchLeads();
@@ -55,11 +38,7 @@ export function LeadsView() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const url = filter === "all"
-        ? "http://localhost:8000/api/leads"
-        : `http://localhost:8000/api/leads?status=${filter}`;
-      const res = await fetch(url);
-      const data = await res.json();
+      const data = await api.leads.list(filter === "all" ? undefined : filter);
       setLeads(data);
     } catch (error) {
       console.error("Error fetching leads:", error);
@@ -70,8 +49,7 @@ export function LeadsView() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/leads/stats");
-      const data = await res.json();
+      const data = await api.leads.stats();
       setStats(data);
     } catch (error) {
       console.error("Error fetching stats:", error);
@@ -80,15 +58,12 @@ export function LeadsView() {
 
   const updateStatus = async (leadId: number, newStatus: string) => {
     try {
-      await fetch(`http://localhost:8000/api/leads/${leadId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: newStatus }),
-      });
+      await api.leads.updateStatus(leadId, newStatus);
+      success("Status Updated", `Lead status changed to ${newStatus}`);
       fetchLeads();
       fetchStats();
-    } catch (error) {
-      console.error("Error updating status:", error);
+    } catch {
+      showError("Update Failed", "Could not update lead status");
     }
   };
 
@@ -232,11 +207,15 @@ export function LeadsView() {
                     </td>
                     <td className="px-4 py-3 text-zinc-300">{lead.email}</td>
                     <td className="px-4 py-3">
-                      <span className={`px-2 py-1 rounded text-xs ${
-                        lead.lead_type === "consultation"
-                          ? "bg-violet-500/20 text-violet-400"
-                          : "bg-zinc-700 text-zinc-300"
-                      }`}>
+                      <span
+                        className={`px-2 py-1 rounded text-xs ${
+                          lead.lead_type === "consultation"
+                            ? "bg-violet-500/20 text-violet-400"
+                            : lead.lead_type === "ai_qualified"
+                              ? "bg-green-500/20 text-green-400"
+                              : "bg-zinc-700 text-zinc-300"
+                        }`}
+                      >
                         {lead.lead_type}
                       </span>
                     </td>
@@ -256,7 +235,13 @@ export function LeadsView() {
                       {formatDate(lead.created_at)}
                     </td>
                     <td className="px-4 py-3">
-                      <button className="p-2 hover:bg-zinc-700 rounded-lg text-zinc-400 hover:text-white">
+                      <button
+                        onClick={() => {
+                          setSelectedLead(lead);
+                          setModalOpen(true);
+                        }}
+                        className="p-2 hover:bg-zinc-700 rounded-lg text-zinc-400 hover:text-white"
+                      >
                         <Eye className="w-4 h-4" />
                       </button>
                     </td>
@@ -267,6 +252,12 @@ export function LeadsView() {
           </table>
         </div>
       </div>
+
+      <LeadDetailModal
+        lead={selectedLead}
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   );
 }

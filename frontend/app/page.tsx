@@ -17,6 +17,7 @@ import { ConsultationCTA } from "@/components/marketing/consultation-form";
 import { WhatsAppCTA } from "@/components/marketing/whatsapp-cta";
 import { LeadPopup } from "@/components/marketing/lead-popup";
 import { ContactForm } from "@/components/marketing/contact-form";
+import { JsonLd } from "@/components/shared/json-ld";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -37,6 +38,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen">
+      <JsonLd />
       <Navbar />
       <HeroSection />
       <TrustSection />

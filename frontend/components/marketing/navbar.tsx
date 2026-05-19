@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/shared/logo";
+import { useUser, useAuth, SignOutButton } from "@clerk/nextjs";
+
+const ADMIN_EMAILS = ["husbantech08@gmail.com"];
 
 const navLinks = [
   { label: "Home", href: "#" },
@@ -17,6 +20,9 @@ const navLinks = [
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isSignedIn } = useAuth();
+  const { user } = useUser();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,14 +33,19 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isSignedIn && user) {
+      const email = user.primaryEmailAddress?.emailAddress?.toLowerCase();
+      setIsAdmin(email ? ADMIN_EMAILS.includes(email) : false);
+    }
+  }, [isSignedIn, user]);
+
   const handleNavClick = (link: typeof navLinks[0]) => {
     if (link.action === "contact") {
       window.dispatchEvent(new CustomEvent("open-contact-form"));
     } else if (link.href === "#") {
-      // Home - scroll to top
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else if (link.href && link.href.length > 1) {
-      // Smooth scroll to section (only if href is more than just "#")
       const element = document.querySelector(link.href);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
@@ -72,11 +83,45 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* CTA Button */}
+          {/* CTA / Auth Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <Button size="sm" onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))}>
-              Book Consultation
-            </Button>
+            {isSignedIn ? (
+              <>
+                {isAdmin && (
+                  <a
+                    href="/dashboard"
+                    className="text-sm font-medium text-violet-400 hover:text-violet-300 transition-colors"
+                  >
+                    Dashboard
+                  </a>
+                )}
+                <SignOutButton>
+                  <button
+                    onClick={() => {
+                      window.dispatchEvent(new CustomEvent("user-signed-out"));
+                    }}
+                    className="text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+                  >
+                    Sign Out
+                  </button>
+                </SignOutButton>
+                <Button size="sm" onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))}>
+                  Book Consultation
+                </Button>
+              </>
+            ) : (
+              <>
+                <a
+                  href="/sign-in"
+                  className="text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+                >
+                  Sign In
+                </a>
+                <Button size="sm" onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))}>
+                  Book Consultation
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -111,6 +156,37 @@ export function Navbar() {
                     {link.label}
                   </button>
                 ))}
+
+                {isSignedIn ? (
+                  <>
+                    {isAdmin && (
+                      <a
+                        href="/dashboard"
+                        className="text-sm font-medium text-violet-400 hover:text-violet-300 transition-colors py-2"
+                      >
+                        Dashboard
+                      </a>
+                    )}
+                    <SignOutButton>
+                      <button
+                        onClick={() => {
+                          window.dispatchEvent(new CustomEvent("user-signed-out"));
+                        }}
+                        className="text-sm font-medium text-zinc-400 hover:text-white transition-colors py-2 text-left"
+                      >
+                        Sign Out
+                      </button>
+                    </SignOutButton>
+                  </>
+                ) : (
+                  <a
+                    href="/sign-in"
+                    className="text-sm font-medium text-zinc-400 hover:text-white transition-colors py-2"
+                  >
+                    Sign In
+                  </a>
+                )}
+
                 <Button className="mt-2" onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))}>Book Consultation</Button>
               </div>
             </motion.div>

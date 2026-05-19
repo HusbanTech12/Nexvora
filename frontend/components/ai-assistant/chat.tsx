@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
-import { Sparkles, Send, Bot, User, Loader2, X, Minimize2, Maximize2 } from "lucide-react";
+import { Sparkles, Send, Bot, User, X, Minimize2 } from "lucide-react";
+import { useChatSSE } from "@/hooks/use-chat-sse";
 
 interface Message {
   id: string;
@@ -21,62 +22,51 @@ const messageVariants: Variants = {
   show: { opacity: 1, y: 0 },
 };
 
+function generateSessionId(): string {
+  if (typeof window === "undefined") return "";
+  let stored = sessionStorage.getItem("chat_session_id");
+  if (!stored) {
+    stored = crypto.randomUUID();
+    sessionStorage.setItem("chat_session_id", stored);
+  }
+  return stored;
+}
+
 export function AIAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      role: "assistant",
-      content: "Hello! I'm your AI assistant. How can I help you today?",
-      timestamp: new Date(),
-    },
-  ]);
   const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
+  const [leadCaptured, setLeadCaptured] = useState(false);
+  const sessionId = isOpen ? generateSessionId() : null;
+
+  const { messages, isTyping, error, sendMessage, clearMessages } =
+    useChatSSE({
+      onLeadQualified: (lead) => {
+        setLeadCaptured(true);
+        console.log("Lead qualified:", lead);
+      },
+    });
+
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isTyping]);
+  }, [messages, isTyping, scrollToBottom]);
 
-  const handleSend = async () => {
-    if (!input.trim()) return;
+  const handleSend = () => {
+    if (!input.trim() || !sessionId) return;
 
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      role: "user",
-      content: input,
-      timestamp: new Date(),
-    };
+    const history = messages.map((m) => ({
+      role: m.role,
+      content: m.content,
+    }));
 
-    setMessages((prev) => [...prev, userMessage]);
+    sendMessage(sessionId, input, history);
     setInput("");
-    setIsTyping(true);
-
-    // Simulate AI response
-    setTimeout(() => {
-      const responses = [
-        "I'd be happy to help you with that! Let me explain how our lead generation system works...",
-        "Great question! Our AI-powered solutions can help increase your conversion rate by up to 40%.",
-        "Absolutely! We offer custom AI integrations tailored to your business needs. Would you like to schedule a consultation?",
-        "That's a great approach. Our team has experience building similar solutions for businesses in your industry.",
-      ];
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: randomResponse,
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, assistantMessage]);
-      setIsTyping(false);
-    }, 1500);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -86,7 +76,15 @@ export function AIAssistant() {
     }
   };
 
-  // Floating button when closed
+  const handleClose = () => {
+    setIsOpen(false);
+    setIsMinimized(false);
+  };
+
+  const handleToggleMinimize = () => {
+    setIsMinimized((prev) => !prev);
+  };
+
   if (!isOpen) {
     return (
       <motion.button
@@ -101,7 +99,6 @@ export function AIAssistant() {
     );
   }
 
-  // Minimized state
   if (isMinimized) {
     return (
       <motion.button
@@ -116,7 +113,6 @@ export function AIAssistant() {
     );
   }
 
-  // Full chat interface
   return (
     <motion.div
       variants={containerVariants}
@@ -137,13 +133,13 @@ export function AIAssistant() {
         </div>
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setIsMinimized(true)}
+            onClick={handleToggleMinimize}
             className="w-8 h-8 rounded-lg hover:bg-zinc-800 flex items-center justify-center transition-colors"
           >
             <Minimize2 className="w-4 h-4 text-zinc-400" />
           </button>
           <button
-            onClick={() => setIsOpen(false)}
+            onClick={handleClose}
             className="w-8 h-8 rounded-lg hover:bg-zinc-800 flex items-center justify-center transition-colors"
           >
             <X className="w-4 h-4 text-zinc-400" />
@@ -179,9 +175,12 @@ export function AIAssistant() {
                   : "bg-violet-600 text-white"
               }`}
             >
-              <p className="text-sm">{message.content}</p>
+              <p className="text-sm whitespace-pre-wrap">{message.content}</p>
               <span className="text-xs text-zinc-500 mt-1 block">
-                {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                {message.timestamp.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
               </span>
             </div>
           </motion.div>
@@ -222,6 +221,22 @@ export function AIAssistant() {
           )}
         </AnimatePresence>
 
+        {error && (
+          <div className="text-red-400 text-sm text-center p-2 bg-red-900/20 rounded-lg">
+            {error}
+          </div>
+        )}
+
+        {leadCaptured && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-green-400 text-sm text-center p-2 bg-green-900/20 rounded-lg"
+          >
+            Thanks! Our team will reach out soon.
+          </motion.div>
+        )}
+
         <div ref={messagesEndRef} />
       </div>
 
@@ -238,7 +253,7 @@ export function AIAssistant() {
           />
           <button
             onClick={handleSend}
-            disabled={!input.trim()}
+            disabled={!input.trim() || isTyping}
             className="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             <Send className="w-4 h-4 text-white" />
