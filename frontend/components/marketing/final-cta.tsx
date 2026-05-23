@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MessageSquare, Calendar } from "lucide-react";
+import { ArrowRight, MessageSquare, Calendar, Sparkles } from "lucide-react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -20,11 +20,24 @@ const itemVariants = {
 export function FinalCTASection() {
   return (
     <section className="py-24 px-6 relative overflow-hidden">
-      {/* Background */}
+      {/* Animated Gradient Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-violet-900/20 to-transparent" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-violet-600/30 rounded-full blur-[150px]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-violet-600/30 rounded-full blur-[150px] animate-pulse" />
+        <div className="absolute bottom-0 left-1/3 w-[600px] h-[300px] bg-purple-600/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: "1.5s" }} />
       </div>
+
+      {/* Grid Pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)
+          `,
+          backgroundSize: "40px 40px",
+        }}
+      />
 
       <div className="max-w-4xl mx-auto relative z-10">
         <motion.div
@@ -36,8 +49,8 @@ export function FinalCTASection() {
         >
           {/* Badge */}
           <motion.div variants={itemVariants} className="mb-8">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-zinc-300">
-              <MessageSquare className="w-4 h-4 text-violet-400" />
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass text-sm text-zinc-300 border-violet-500/30">
+              <Sparkles className="w-4 h-4 text-violet-400" />
               Let&apos;s Build Something Amazing
             </span>
           </motion.div>
@@ -65,14 +78,37 @@ export function FinalCTASection() {
             variants={itemVariants}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Button size="xl" className="group animate-pulse-glow">
-              <Calendar className="w-5 h-5" />
-              Book Free Consultation
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <Button size="xl" className="group relative overflow-hidden animate-pulse-glow">
+              <span className="relative z-10 flex items-center gap-2">
+                <Calendar className="w-5 h-5" />
+                Book Free Consultation
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Button>
-            <Button size="xl" variant="outline">
+            <Button size="xl" variant="outline" className="group">
               Start Your Project
+              <Sparkles className="w-4 h-4 group-hover:rotate-12 transition-transform" />
             </Button>
+          </motion.div>
+
+          {/* Trust indicators */}
+          <motion.div
+            variants={itemVariants}
+            className="mt-12 flex flex-wrap items-center justify-center gap-6 text-xs text-zinc-600"
+          >
+            <span className="flex items-center gap-1.5">
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+              Free consultation
+            </span>
+            <span className="flex items-center gap-1.5">
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+              No commitment required
+            </span>
+            <span className="flex items-center gap-1.5">
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+              24h response time
+            </span>
           </motion.div>
         </motion.div>
       </div>

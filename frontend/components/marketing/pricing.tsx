@@ -1,14 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Check, Sparkles, Rocket, Crown } from "lucide-react";
+import { Check, Sparkles, Rocket, Crown, Zap } from "lucide-react";
 
 const plans = [
   {
     name: "Starter",
-    price: "$499",
-    priceRange: "$499 – $999",
+    monthlyPrice: "$499",
+    yearlyPrice: "$4,999",
+    monthlyRange: "$499 – $999",
+    yearlyRange: "$4,999 – $9,999",
     description: "Perfect for small businesses looking to establish their online presence.",
     icon: Sparkles,
     popular: false,
@@ -25,8 +28,10 @@ const plans = [
   },
   {
     name: "Growth",
-    price: "$1,500",
-    priceRange: "$1,500 – $3,000",
+    monthlyPrice: "$1,500",
+    yearlyPrice: "$14,999",
+    monthlyRange: "$1,500 – $3,000",
+    yearlyRange: "$14,999 – $29,999",
     description: "Ideal for growing businesses needing a fullstack web application.",
     icon: Rocket,
     popular: true,
@@ -45,8 +50,10 @@ const plans = [
   },
   {
     name: "Premium",
-    price: "$3,000+",
-    priceRange: "$3,000 – $8,000+",
+    monthlyPrice: "$3,000+",
+    yearlyPrice: "$29,999+",
+    monthlyRange: "$3,000 – $8,000+",
+    yearlyRange: "$29,999 – $79,999+",
     description: "For serious businesses and startups requiring advanced AI systems.",
     icon: Crown,
     popular: false,
@@ -80,26 +87,66 @@ const itemVariants = {
 };
 
 export function PricingSection() {
+  const [isYearly, setIsYearly] = useState(false);
+
   return (
-    <section id="pricing" className="py-24 px-6 bg-zinc-900/30">
-      <div className="max-w-7xl mx-auto">
+    <section id="pricing" className="py-24 px-6 bg-zinc-900/30 relative overflow-hidden">
+      <div className="absolute inset-0 mesh-gradient opacity-30" />
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-600/10 text-violet-400 text-sm mb-4">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-600/10 text-violet-400 text-sm mb-4 border border-violet-500/20">
             <Crown className="w-4 h-4" />
             Pricing
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
             Choose Your <span className="gradient-text">Plan</span>
           </h2>
-          <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
+          <p className="text-lg text-zinc-400 max-w-2xl mx-auto mb-8">
             Transparent pricing with no hidden costs
           </p>
+
+          {/* Billing Toggle */}
+          <div className="inline-flex items-center gap-4 bg-zinc-800/50 rounded-full p-1.5 border border-zinc-700/50">
+            <button
+              onClick={() => setIsYearly(false)}
+              className={`relative px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                !isYearly ? "text-white" : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              {!isYearly && (
+                <motion.div
+                  layoutId="billing-bg"
+                  className="absolute inset-0 bg-gradient-to-r from-violet-600 to-purple-600 rounded-full"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10">Monthly</span>
+            </button>
+            <button
+              onClick={() => setIsYearly(true)}
+              className={`relative px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                isYearly ? "text-white" : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              {isYearly && (
+                <motion.div
+                  layoutId="billing-bg"
+                  className="absolute inset-0 bg-gradient-to-r from-violet-600 to-purple-600 rounded-full"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10">Yearly</span>
+              <span className="relative z-10 ml-1.5 text-[10px] text-green-400 bg-green-500/20 px-1.5 py-0.5 rounded-full">
+                Save 20%
+              </span>
+            </button>
+          </div>
         </motion.div>
 
         {/* Pricing Grid */}
@@ -110,53 +157,66 @@ export function PricingSection() {
           viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
-          {plans.map((plan, i) => (
+          {plans.map((plan) => (
             <motion.div
               key={plan.name}
               variants={itemVariants}
-              className={`relative group glass rounded-2xl p-8 transition-all duration-300 flex flex-col ${
+              className={`relative group glass rounded-2xl p-8 transition-all duration-500 flex flex-col ${
                 plan.popular
-                  ? "border-violet-500 shadow-xl shadow-violet-500/20"
+                  ? "border-violet-500 shadow-xl shadow-violet-500/20 scale-[1.02] md:scale-105"
                   : "hover:border-violet-500/50 hover:shadow-xl hover:shadow-violet-500/10"
               }`}
             >
               {/* Popular Badge */}
               {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-1 px-4 py-1 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 text-white text-xs font-medium">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                  <span className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 text-white text-xs font-medium shadow-lg shadow-violet-500/30">
                     <Sparkles className="w-3 h-3" />
                     Most Popular
                   </span>
                 </div>
               )}
 
-              {/* Plan Icon */}
-              <div className="flex items-center gap-3 mb-4">
-                <div
-                  className={`inline-flex items-center justify-center w-10 h-10 rounded-xl ${
-                    plan.popular
-                      ? "bg-gradient-to-r from-violet-600 to-purple-600"
-                      : "bg-zinc-800"
-                  }`}
-                >
-                  <plan.icon
-                    className={`w-5 h-5 ${
-                      plan.popular ? "text-white" : "text-zinc-400"
+              {/* Plan Icon & Name */}
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`inline-flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 ${
+                      plan.popular
+                        ? "bg-gradient-to-r from-violet-600 to-purple-600 shadow-lg shadow-violet-500/20"
+                        : "bg-zinc-800 group-hover:bg-gradient-to-r group-hover:from-violet-600 group-hover:to-purple-600"
                     }`}
-                  />
+                  >
+                    <plan.icon
+                      className={`w-5 h-5 transition-colors ${
+                        plan.popular ? "text-white" : "text-zinc-400 group-hover:text-white"
+                      }`}
+                    />
+                  </div>
+                  <span className="text-lg font-semibold text-white">
+                    {plan.name}
+                  </span>
                 </div>
-                <span className="text-lg font-semibold text-white">
-                  {plan.name}
-                </span>
+                {plan.popular && (
+                  <Zap className="w-4 h-4 text-violet-400" />
+                )}
               </div>
 
               {/* Price */}
-              <div className="mb-4">
-                <span className="text-4xl font-bold text-white">{plan.price}</span>
+              <div className="mb-2">
+                <span className="text-4xl font-bold text-white">
+                  {isYearly ? plan.yearlyPrice : plan.monthlyPrice}
+                </span>
                 <span className="text-zinc-500 text-sm ml-2">
-                  {plan.priceRange}
+                  {isYearly ? plan.yearlyRange : plan.monthlyRange}
                 </span>
               </div>
+
+              {isYearly && (
+                <div className="text-xs text-green-400 mb-4">
+                  Billed annually — save ~20%
+                </div>
+              )}
 
               {/* Description */}
               <p className="text-sm text-zinc-400 mb-6">{plan.description}</p>
@@ -165,7 +225,9 @@ export function PricingSection() {
               <ul className="space-y-3 mb-8 flex-1">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3">
-                    <Check className="w-4 h-4 text-violet-400 flex-shrink-0 mt-0.5" />
+                    <div className="p-0.5 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 flex-shrink-0 mt-0.5">
+                      <Check className="w-3 h-3 text-white" />
+                    </div>
                     <span className="text-sm text-zinc-300">{feature}</span>
                   </li>
                 ))}
@@ -174,9 +236,10 @@ export function PricingSection() {
               {/* CTA */}
               <Button
                 variant={plan.popular ? "default" : "outline"}
-                className="w-full"
+                className="w-full group"
               >
                 {plan.cta}
+                <Zap className="w-4 h-4 group-hover:rotate-12 transition-transform" />
               </Button>
             </motion.div>
           ))}
