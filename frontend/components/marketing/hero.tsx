@@ -110,14 +110,26 @@ export function HeroSection() {
             variants={itemVariants}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
           >
-            <Button size="xl" className="group relative overflow-hidden">
+            <Button
+              size="xl"
+              className="group relative overflow-hidden"
+              onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))}
+            >
               <span className="relative z-10 flex items-center gap-2">
                 Book Free Consultation
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Button>
-            <Button size="xl" variant="outline" className="group">
+            <Button
+              size="xl"
+              variant="outline"
+              className="group"
+              onClick={() => {
+                const el = document.querySelector("#services");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
               Explore Services
               <Zap className="w-4 h-4 group-hover:rotate-12 transition-transform" />
             </Button>
