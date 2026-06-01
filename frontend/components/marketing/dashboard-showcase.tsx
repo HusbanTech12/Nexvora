@@ -9,7 +9,7 @@ const dashboards = [
     description: "Real-time visitor analytics, conversion metrics, and business insights",
     icon: BarChart3,
     features: ["Visitor Tracking", "Conversion Funnel", "Performance Metrics"],
-    color: "from-violet-600 to-purple-600",
+    color: "from-teal-500 to-emerald-500",
   },
   {
     title: "Lead Management",
@@ -58,7 +58,7 @@ export function DashboardShowcaseSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-600/10 text-violet-400 text-sm mb-4">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 text-teal-300 text-sm mb-4">
             <PieChart className="w-4 h-4" />
             Dashboard
           </span>
@@ -82,7 +82,7 @@ export function DashboardShowcaseSection() {
             <motion.div
               key={dashboard.title}
               variants={itemVariants}
-              className="group glass rounded-2xl p-6 hover:border-violet-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/10"
+              className="group glass rounded-2xl p-6 hover:border-teal-400/50 transition-all duration-300 hover:shadow-xl hover:shadow-teal-400/10"
             >
               {/* Preview Window */}
               <div className="glass-light rounded-xl p-4 mb-4 min-h-[160px] relative overflow-hidden">

@@ -51,7 +51,7 @@ export function AnalyticsView() {
           className="glass rounded-xl p-4"
         >
           <div className="flex items-center justify-between mb-2">
-            <Users className="w-5 h-5 text-violet-400" />
+            <Users className="w-5 h-5 text-teal-300" />
             <span className="flex items-center text-green-400 text-sm">
               <ArrowUpRight className="w-3 h-3" /> {conversion?.lead_rate ?? 0}%
             </span>
@@ -115,8 +115,8 @@ export function AnalyticsView() {
               <AreaChart data={chartData}>
                 <defs>
                   <linearGradient id="colorLeads" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#14b8a6" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#14b8a6" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#3f3f46" />
@@ -126,7 +126,7 @@ export function AnalyticsView() {
                   contentStyle={{ backgroundColor: "#18181b", border: "1px solid #3f3f46" }}
                   labelStyle={{ color: "#fff" }}
                 />
-                <Area type="monotone" dataKey="leads" stroke="#8b5cf6" fillOpacity={1} fill="url(#colorLeads)" />
+                <Area type="monotone" dataKey="leads" stroke="#14b8a6" fillOpacity={1} fill="url(#colorLeads)" />
               </AreaChart>
             </ResponsiveContainer>
           ) : (
@@ -184,7 +184,7 @@ export function AnalyticsView() {
                       initial={{ width: 0 }}
                       animate={{ width: `${item.percentage}%` }}
                       transition={{ delay: 0.7 + i * 0.1 }}
-                      className="h-full bg-gradient-to-r from-violet-600 to-purple-600"
+                      className="h-full bg-gradient-to-r from-teal-500 to-emerald-500"
                     />
                   </div>
                 </div>
@@ -216,7 +216,7 @@ export function AnalyticsView() {
                         initial={{ width: 0 }}
                         animate={{ width: `${Math.max(widthPercent, 2)}%` }}
                         transition={{ delay: 0.8 + i * 0.1 }}
-                        className="h-full bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-end pr-2"
+                        className="h-full bg-gradient-to-r from-teal-500 to-emerald-500 flex items-center justify-end pr-2"
                       >
                         <span className="text-white text-sm font-medium">{item.count}</span>
                       </motion.div>

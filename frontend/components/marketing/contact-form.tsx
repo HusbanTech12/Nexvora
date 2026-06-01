@@ -88,7 +88,7 @@ export function ContactForm({ isOpen, onClose }: ContactFormProps) {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg glass rounded-2xl border border-zinc-800 p-6 z-50 shadow-2xl shadow-violet-500/20"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg glass rounded-2xl border border-zinc-800 p-6 z-50 shadow-2xl shadow-teal-400/20"
           >
             {/* Close Button */}
             <button
@@ -131,7 +131,7 @@ export function ContactForm({ isOpen, onClose }: ContactFormProps) {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors"
+                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-teal-400 focus:outline-none transition-colors"
                         placeholder="John Doe"
                       />
                     </div>
@@ -143,7 +143,7 @@ export function ContactForm({ isOpen, onClose }: ContactFormProps) {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors"
+                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-teal-400 focus:outline-none transition-colors"
                         placeholder="john@example.com"
                       />
                     </div>
@@ -158,7 +158,7 @@ export function ContactForm({ isOpen, onClose }: ContactFormProps) {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors"
+                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-teal-400 focus:outline-none transition-colors"
                         placeholder="+1 (555) 123-4567"
                       />
                     </div>
@@ -169,7 +169,7 @@ export function ContactForm({ isOpen, onClose }: ContactFormProps) {
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
-                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors"
+                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-teal-400 focus:outline-none transition-colors"
                         placeholder="Your Company"
                       />
                     </div>
@@ -183,7 +183,7 @@ export function ContactForm({ isOpen, onClose }: ContactFormProps) {
                       value={formData.message}
                       onChange={handleChange}
                       rows={3}
-                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors resize-none"
+                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-teal-400 focus:outline-none transition-colors resize-none"
                       placeholder="How can we help you?"
                     />
                   </div>

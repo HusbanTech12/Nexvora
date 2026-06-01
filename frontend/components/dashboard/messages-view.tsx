@@ -52,7 +52,7 @@ export function MessagesView() {
             placeholder="Search messages..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg pl-10 pr-4 py-2 text-white placeholder-zinc-500 focus:outline-none focus:border-violet-500"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg pl-10 pr-4 py-2 text-white placeholder-zinc-500 focus:outline-none focus:border-teal-400"
           />
         </div>
         <button className="flex items-center gap-2 px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-zinc-400 hover:text-white hover:border-zinc-600 transition-colors">
@@ -67,7 +67,7 @@ export function MessagesView() {
         <div className="glass rounded-xl overflow-hidden">
           <div className="p-4 border-b border-zinc-800">
             <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 text-violet-400" />
+              <MessageSquare className="w-5 h-5 text-teal-300" />
               Messages ({filteredMessages.length})
             </h3>
           </div>
@@ -85,7 +85,7 @@ export function MessagesView() {
                   transition={{ delay: i * 0.05 }}
                   onClick={() => setSelectedMessage(msg)}
                   className={`w-full p-4 text-left hover:bg-zinc-800/50 transition-colors ${
-                    selectedMessage?.id === msg.id ? "bg-violet-600/10" : ""
+                    selectedMessage?.id === msg.id ? "bg-teal-500/10" : ""
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
@@ -101,7 +101,7 @@ export function MessagesView() {
                   <span
                     className={`inline-block mt-2 px-2 py-0.5 rounded text-xs ${
                       msg.lead_type === "consultation"
-                        ? "bg-violet-500/20 text-violet-400"
+                        ? "bg-teal-400/20 text-teal-300"
                         : msg.lead_type === "ai_qualified"
                           ? "bg-green-500/20 text-green-400"
                           : "bg-zinc-700 text-zinc-300"
@@ -120,7 +120,7 @@ export function MessagesView() {
           {selectedMessage ? (
             <div className="p-6">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 flex items-center justify-center">
                   <User className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -154,7 +154,7 @@ export function MessagesView() {
               <div className="flex gap-3 mt-6">
                 <a
                   href={`mailto:${selectedMessage.email}`}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg text-white transition-colors"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-teal-500 hover:bg-teal-600 rounded-lg text-white transition-colors"
                 >
                   <Mail className="w-4 h-4" />
                   Reply

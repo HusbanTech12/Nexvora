@@ -37,7 +37,7 @@ export function Header({ onMenuClick }: HeaderProps) {
           <input
             type="text"
             placeholder="Search..."
-            className="bg-zinc-800 border border-zinc-700 rounded-lg pl-10 pr-4 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-violet-500"
+            className="bg-zinc-800 border border-zinc-700 rounded-lg pl-10 pr-4 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-teal-400"
           />
         </div>
       </div>
@@ -45,7 +45,7 @@ export function Header({ onMenuClick }: HeaderProps) {
       <div className="flex items-center gap-4">
         <button className="p-2 rounded-lg hover:bg-zinc-800 text-zinc-400 relative">
           <Bell className="w-5 h-5" />
-          <span className="absolute top-1 right-1 w-2 h-2 bg-violet-500 rounded-full" />
+          <span className="absolute top-1 right-1 w-2 h-2 bg-teal-400 rounded-full" />
         </button>
 
         {/* User Menu */}
@@ -54,7 +54,7 @@ export function Header({ onMenuClick }: HeaderProps) {
             onClick={() => setShowMenu(!showMenu)}
             className="flex items-center gap-2 p-1 rounded-lg hover:bg-zinc-800 transition-colors"
           >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 flex items-center justify-center">
               <span className="text-white text-sm font-medium">{initials}</span>
             </div>
             <span className="hidden sm:block text-sm text-white">
@@ -76,7 +76,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                   <p className="text-xs text-zinc-400 truncate">
                     {user?.primaryEmailAddress?.emailAddress}
                   </p>
-                  <span className="inline-block mt-2 px-2 py-0.5 bg-violet-500/20 text-violet-400 rounded text-xs">
+                  <span className="inline-block mt-2 px-2 py-0.5 bg-teal-400/20 text-teal-300 rounded text-xs">
                     Admin
                   </span>
                 </div>

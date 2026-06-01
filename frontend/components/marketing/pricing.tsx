@@ -100,7 +100,7 @@ export function PricingSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-600/10 text-violet-400 text-sm mb-4 border border-violet-500/20">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 text-teal-300 text-sm mb-4 border border-teal-400/20">
             <Crown className="w-4 h-4" />
             Pricing
           </span>
@@ -122,7 +122,7 @@ export function PricingSection() {
               {!isYearly && (
                 <motion.div
                   layoutId="billing-bg"
-                  className="absolute inset-0 bg-gradient-to-r from-violet-600 to-purple-600 rounded-full"
+                  className="absolute inset-0 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
@@ -137,7 +137,7 @@ export function PricingSection() {
               {isYearly && (
                 <motion.div
                   layoutId="billing-bg"
-                  className="absolute inset-0 bg-gradient-to-r from-violet-600 to-purple-600 rounded-full"
+                  className="absolute inset-0 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
@@ -163,14 +163,14 @@ export function PricingSection() {
               variants={itemVariants}
               className={`relative group glass rounded-2xl p-8 transition-all duration-500 flex flex-col ${
                 plan.popular
-                  ? "border-violet-500 shadow-xl shadow-violet-500/20 scale-[1.02] md:scale-105"
-                  : "hover:border-violet-500/50 hover:shadow-xl hover:shadow-violet-500/10"
+                  ? "border-teal-400 shadow-xl shadow-teal-400/20 scale-[1.02] md:scale-105"
+                  : "hover:border-teal-400/50 hover:shadow-xl hover:shadow-teal-400/10"
               }`}
             >
               {/* Popular Badge */}
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-                  <span className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 text-white text-xs font-medium shadow-lg shadow-violet-500/30">
+                  <span className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 text-white text-xs font-medium shadow-lg shadow-teal-400/30">
                     <Sparkles className="w-3 h-3" />
                     Most Popular
                   </span>
@@ -183,8 +183,8 @@ export function PricingSection() {
                   <div
                     className={`inline-flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 ${
                       plan.popular
-                        ? "bg-gradient-to-r from-violet-600 to-purple-600 shadow-lg shadow-violet-500/20"
-                        : "bg-zinc-800 group-hover:bg-gradient-to-r group-hover:from-violet-600 group-hover:to-purple-600"
+                        ? "bg-gradient-to-r from-teal-500 to-emerald-500 shadow-lg shadow-teal-400/20"
+                        : "bg-zinc-800 group-hover:bg-gradient-to-r group-hover:from-teal-500 group-hover:to-emerald-500"
                     }`}
                   >
                     <plan.icon
@@ -198,7 +198,7 @@ export function PricingSection() {
                   </span>
                 </div>
                 {plan.popular && (
-                  <Zap className="w-4 h-4 text-violet-400" />
+                  <Zap className="w-4 h-4 text-teal-300" />
                 )}
               </div>
 
@@ -225,7 +225,7 @@ export function PricingSection() {
               <ul className="space-y-3 mb-8 flex-1">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3">
-                    <div className="p-0.5 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 flex-shrink-0 mt-0.5">
+                    <div className="p-0.5 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 flex-shrink-0 mt-0.5">
                       <Check className="w-3 h-3 text-white" />
                     </div>
                     <span className="text-sm text-zinc-300">{feature}</span>

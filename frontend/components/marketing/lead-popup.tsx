@@ -69,7 +69,7 @@ export function LeadPopup({ delay = 30000 }: LeadPopupProps) {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed bottom-8 right-8 w-80 glass rounded-2xl border border-zinc-800 p-6 z-50 shadow-2xl shadow-violet-500/20"
+            className="fixed bottom-8 right-8 w-80 glass rounded-2xl border border-zinc-800 p-6 z-50 shadow-2xl shadow-teal-400/20"
           >
             {/* Close Button */}
             <button
@@ -81,10 +81,10 @@ export function LeadPopup({ delay = 30000 }: LeadPopupProps) {
 
             {/* Badge */}
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-teal-500 to-emerald-500 flex items-center justify-center">
                 <Sparkles className="w-4 h-4 text-white" />
               </div>
-              <span className="text-xs text-violet-400 font-medium">AI-Powered Insights</span>
+              <span className="text-xs text-teal-300 font-medium">AI-Powered Insights</span>
             </div>
 
             {/* Content */}
@@ -103,7 +103,7 @@ export function LeadPopup({ delay = 30000 }: LeadPopupProps) {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="Enter your email"
-                className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors"
+                className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-teal-400 focus:outline-none transition-colors"
               />
               <Button type="submit" className="w-full">
                 Get Free Guide

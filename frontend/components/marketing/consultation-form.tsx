@@ -93,7 +93,7 @@ export function ConsultationCTA({ isOpen: externalIsOpen, onClose: externalOnClo
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg glass rounded-2xl border border-zinc-800 p-6 z-50 shadow-2xl shadow-violet-500/20"
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg glass rounded-2xl border border-zinc-800 p-6 z-50 shadow-2xl shadow-teal-400/20"
             >
               {/* Close Button */}
               <button
@@ -136,7 +136,7 @@ export function ConsultationCTA({ isOpen: externalIsOpen, onClose: externalOnClo
                           value={formData.name}
                           onChange={handleChange}
                           required
-                          className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors"
+                          className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-teal-400 focus:outline-none transition-colors"
                           placeholder="John Doe"
                         />
                       </div>
@@ -148,7 +148,7 @@ export function ConsultationCTA({ isOpen: externalIsOpen, onClose: externalOnClo
                           value={formData.email}
                           onChange={handleChange}
                           required
-                          className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors"
+                          className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-teal-400 focus:outline-none transition-colors"
                           placeholder="john@example.com"
                         />
                       </div>
@@ -163,7 +163,7 @@ export function ConsultationCTA({ isOpen: externalIsOpen, onClose: externalOnClo
                           name="company"
                           value={formData.company}
                           onChange={handleChange}
-                          className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors"
+                          className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-teal-400 focus:outline-none transition-colors"
                           placeholder="Your Company"
                         />
                       </div>
@@ -173,7 +173,7 @@ export function ConsultationCTA({ isOpen: externalIsOpen, onClose: externalOnClo
                           name="budget"
                           value={formData.budget}
                           onChange={handleChange}
-                          className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors"
+                          className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-teal-400 focus:outline-none transition-colors"
                         >
                           <option value="">Select budget</option>
                           <option value="500-1000">$500 - $1,000</option>
@@ -192,7 +192,7 @@ export function ConsultationCTA({ isOpen: externalIsOpen, onClose: externalOnClo
                         value={formData.message}
                         onChange={handleChange}
                         rows={3}
-                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-violet-500 focus:outline-none transition-colors resize-none"
+                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:border-teal-400 focus:outline-none transition-colors resize-none"
                         placeholder="Tell us about your project..."
                       />
                     </div>

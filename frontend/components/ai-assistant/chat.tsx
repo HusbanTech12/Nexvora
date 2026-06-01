@@ -90,7 +90,7 @@ export function AIAssistant() {
       <motion.button
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
-        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center shadow-lg shadow-violet-500/50 hover:scale-110 transition-transform z-50"
+        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 flex items-center justify-center shadow-lg shadow-teal-400/50 hover:scale-110 transition-transform z-50"
         onClick={() => setIsOpen(true)}
       >
         <Sparkles className="w-6 h-6 text-white" />
@@ -105,10 +105,10 @@ export function AIAssistant() {
         variants={containerVariants}
         initial="hidden"
         animate="show"
-        className="fixed bottom-6 right-6 glass rounded-full p-4 border border-violet-500/30 hover:border-violet-500/50 transition-colors z-50"
+        className="fixed bottom-6 right-6 glass rounded-full p-4 border border-teal-400/30 hover:border-teal-400/50 transition-colors z-50"
         onClick={() => setIsMinimized(false)}
       >
-        <Sparkles className="w-6 h-6 text-violet-400" />
+        <Sparkles className="w-6 h-6 text-teal-300" />
       </motion.button>
     );
   }
@@ -118,12 +118,12 @@ export function AIAssistant() {
       variants={containerVariants}
       initial="hidden"
       animate="show"
-      className="fixed bottom-6 right-6 w-96 h-[500px] glass rounded-2xl border border-zinc-800 flex flex-col z-50 shadow-2xl shadow-violet-500/20"
+      className="fixed bottom-6 right-6 w-96 h-[500px] glass rounded-2xl border border-zinc-800 flex flex-col z-50 shadow-2xl shadow-teal-400/20"
     >
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 flex items-center justify-center">
             <Sparkles className="w-4 h-4 text-white" />
           </div>
           <div>
@@ -158,7 +158,7 @@ export function AIAssistant() {
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                 message.role === "assistant"
-                  ? "bg-gradient-to-r from-violet-600 to-purple-600"
+                  ? "bg-gradient-to-r from-teal-500 to-emerald-500"
                   : "bg-zinc-700"
               }`}
             >
@@ -172,7 +172,7 @@ export function AIAssistant() {
               className={`max-w-[80%] rounded-2xl px-4 py-2 ${
                 message.role === "assistant"
                   ? "bg-zinc-800 text-zinc-200"
-                  : "bg-violet-600 text-white"
+                  : "bg-teal-500 text-white"
               }`}
             >
               <p className="text-sm whitespace-pre-wrap">{message.content}</p>
@@ -195,7 +195,7 @@ export function AIAssistant() {
               exit={{ opacity: 0 }}
               className="flex gap-3"
             >
-              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 flex items-center justify-center">
                 <Bot className="w-4 h-4 text-white" />
               </div>
               <div className="bg-zinc-800 rounded-2xl px-4 py-3">
@@ -254,7 +254,7 @@ export function AIAssistant() {
           <button
             onClick={handleSend}
             disabled={!input.trim() || isTyping}
-            className="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-8 h-8 rounded-lg bg-teal-500 flex items-center justify-center hover:bg-teal-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             <Send className="w-4 h-4 text-white" />
           </button>

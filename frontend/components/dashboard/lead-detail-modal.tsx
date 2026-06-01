@@ -25,7 +25,7 @@ interface LeadDetailModalProps {
 const statusColors: Record<string, string> = {
   new: "bg-blue-500/20 text-blue-400 border-blue-500/50",
   contacted: "bg-yellow-500/20 text-yellow-400 border-yellow-500/50",
-  qualified: "bg-purple-500/20 text-purple-400 border-purple-500/50",
+  qualified: "bg-emerald-400/20 text-emerald-300 border-emerald-400/50",
   converted: "bg-green-500/20 text-green-400 border-green-500/50",
 };
 
@@ -52,7 +52,7 @@ export function LeadDetailModal({ lead, isOpen, onClose }: LeadDetailModalProps)
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-zinc-800">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 flex items-center justify-center">
                   <User className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -147,7 +147,7 @@ export function LeadDetailModal({ lead, isOpen, onClose }: LeadDetailModalProps)
               <div className="flex gap-3 pt-2">
                 <a
                   href={`mailto:${lead.email}`}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg text-white transition-colors"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-teal-500 hover:bg-teal-600 rounded-lg text-white transition-colors"
                 >
                   <Mail className="w-4 h-4" />
                   Reply

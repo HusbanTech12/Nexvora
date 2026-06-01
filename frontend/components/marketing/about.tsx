@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Sparkles, Target, Heart, Users, Award, Globe } from "lucide-react";
+import { LogoIcon } from "@/components/shared/logo";
 
 const team = [
   {
@@ -57,7 +58,7 @@ export function AboutSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-600/10 text-violet-400 text-sm mb-4">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 text-teal-300 text-sm mb-4">
             <Sparkles className="w-4 h-4" />
             About Us
           </span>
@@ -83,9 +84,9 @@ export function AboutSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="glass rounded-xl p-6 text-center hover:border-violet-500/50 transition-colors"
+              className="glass rounded-xl p-6 text-center hover:border-teal-400/50 transition-colors"
             >
-              <stat.icon className="w-8 h-8 text-violet-400 mx-auto mb-3" />
+              <stat.icon className="w-8 h-8 text-teal-300 mx-auto mb-3" />
               <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
               <div className="text-sm text-zinc-400">{stat.label}</div>
             </motion.div>
@@ -97,7 +98,7 @@ export function AboutSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass rounded-2xl p-8 mb-20 border border-violet-500/20"
+          className="glass rounded-2xl p-8 mb-20 border border-teal-400/20"
         >
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -115,11 +116,11 @@ export function AboutSection() {
               </div>
             </div>
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-violet-600/20 to-purple-600/20 rounded-2xl blur-xl" />
-              <div className="relative glass-light rounded-xl p-6 border border-violet-500/30">
+              <div className="absolute -inset-4 bg-gradient-to-r from-teal-500/20 to-emerald-500/20 rounded-2xl blur-xl" />
+              <div className="relative glass-light rounded-xl p-6 border border-teal-400/30">
                 <div className="text-center">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center mx-auto mb-4">
-                    <Sparkles className="w-8 h-8 text-white" />
+                  <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                    <LogoIcon size="lg" variant="dark" />
                   </div>
                   <h4 className="text-xl font-bold text-white mb-2">Nexvora</h4>
                   <p className="text-zinc-400 text-sm">AI-Powered Development Agency</p>
@@ -145,10 +146,10 @@ export function AboutSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="glass rounded-xl p-6 hover:border-violet-500/50 transition-colors"
+                className="glass rounded-xl p-6 hover:border-teal-400/50 transition-colors"
               >
-                <div className="w-12 h-12 rounded-xl bg-violet-600/20 flex items-center justify-center mb-4">
-                  <value.icon className="w-6 h-6 text-violet-400" />
+                <div className="w-12 h-12 rounded-xl bg-teal-500/20 flex items-center justify-center mb-4">
+                  <value.icon className="w-6 h-6 text-teal-300" />
                 </div>
                 <h4 className="text-lg font-semibold text-white mb-2">{value.title}</h4>
                 <p className="text-sm text-zinc-400">{value.description}</p>
@@ -172,15 +173,15 @@ export function AboutSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="glass rounded-xl p-6 text-center hover:border-violet-500/50 transition-colors"
+                className="glass rounded-xl p-6 text-center hover:border-teal-400/50 transition-colors"
               >
-                <div className="w-20 h-20 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center mx-auto mb-4">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl font-bold text-white">
                     {member.name.charAt(0)}
                   </span>
                 </div>
                 <h4 className="text-lg font-semibold text-white mb-1">{member.name}</h4>
-                <p className="text-sm text-violet-400 mb-2">{member.role}</p>
+                <p className="text-sm text-teal-300 mb-2">{member.role}</p>
                 <p className="text-sm text-zinc-400">{member.description}</p>
               </motion.div>
             ))}

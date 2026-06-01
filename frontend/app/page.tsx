@@ -18,6 +18,7 @@ import { WhatsAppCTA } from "@/components/marketing/whatsapp-cta";
 import { LeadPopup } from "@/components/marketing/lead-popup";
 import { ContactForm } from "@/components/marketing/contact-form";
 import { JsonLd } from "@/components/shared/json-ld";
+import { ThemeProvider } from "@/components/shared/theme-provider";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -37,6 +38,7 @@ export default function Home() {
   }, []);
 
   return (
+    <ThemeProvider>
     <main className="min-h-screen">
       <JsonLd />
       <Navbar />
@@ -59,5 +61,6 @@ export default function Home() {
       <LeadPopup delay={30000} />
       <ContactForm isOpen={showContact} onClose={() => setShowContact(false)} />
     </main>
+    </ThemeProvider>
   );
 }

@@ -70,7 +70,7 @@ export function HowItWorksSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-600/10 text-violet-400 text-sm mb-4">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 text-teal-300 text-sm mb-4">
             <CheckCircle className="w-4 h-4" />
             Our Process
           </span>
@@ -98,18 +98,18 @@ export function HowItWorksSection() {
             >
               {/* Connection Line */}
               {i < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-12 left-[calc(100%+12px)] w-[calc(100%-24px)] h-px bg-gradient-to-r from-violet-500/50 to-transparent z-0" />
+                <div className="hidden lg:block absolute top-12 left-[calc(100%+12px)] w-[calc(100%-24px)] h-px bg-gradient-to-r from-teal-400/50 to-transparent z-0" />
               )}
 
-              <div className="glass rounded-2xl p-6 relative z-10 h-full hover:border-violet-500/50 transition-all duration-300">
+              <div className="glass rounded-2xl p-6 relative z-10 h-full hover:border-teal-400/50 transition-all duration-300">
                 {/* Step Number */}
-                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center text-sm font-bold text-white">
+                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 flex items-center justify-center text-sm font-bold text-white">
                   {i + 1}
                 </div>
 
                 {/* Icon */}
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-800 mb-4 mt-2">
-                  <step.icon className="w-6 h-6 text-violet-400" />
+                  <step.icon className="w-6 h-6 text-teal-300" />
                 </div>
 
                 {/* Content */}

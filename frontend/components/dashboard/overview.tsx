@@ -62,8 +62,8 @@ export function DashboardOverview() {
           className="glass rounded-xl p-4"
         >
           <div className="flex items-center justify-between mb-2">
-            <div className="w-10 h-10 rounded-lg bg-violet-600/20 flex items-center justify-center">
-              <Users className="w-5 h-5 text-violet-400" />
+            <div className="w-10 h-10 rounded-lg bg-teal-500/20 flex items-center justify-center">
+              <Users className="w-5 h-5 text-teal-300" />
             </div>
             {liveData && (
               <span className="flex items-center text-green-400 text-xs">
@@ -119,8 +119,8 @@ export function DashboardOverview() {
           className="glass rounded-xl p-4"
         >
           <div className="flex items-center justify-between mb-2">
-            <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center">
-              <TrendingUp className="w-5 h-5 text-purple-400" />
+            <div className="w-10 h-10 rounded-lg bg-emerald-400/20 flex items-center justify-center">
+              <TrendingUp className="w-5 h-5 text-emerald-300" />
             </div>
           </div>
           <p className="text-2xl font-bold text-white">{conversionRate}%</p>
@@ -138,7 +138,7 @@ export function DashboardOverview() {
           className="lg:col-span-2 glass rounded-xl p-6"
         >
           <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <Activity className="w-5 h-5 text-violet-400" />
+            <Activity className="w-5 h-5 text-teal-300" />
             Recent Activity
           </h3>
           <div className="space-y-3 max-h-[400px] overflow-y-auto">
@@ -158,7 +158,7 @@ export function DashboardOverview() {
                   <div
                     className={`w-2 h-2 rounded-full mt-2 shrink-0 ${
                       activity.type === "lead"
-                        ? "bg-violet-400"
+                        ? "bg-teal-300"
                         : "bg-blue-400"
                     }`}
                   />
@@ -209,7 +209,7 @@ export function DashboardOverview() {
                 {
                   label: "Qualified",
                   value: stats.qualified,
-                  color: "bg-purple-500",
+                  color: "bg-emerald-400",
                   total: stats.total,
                 },
                 {

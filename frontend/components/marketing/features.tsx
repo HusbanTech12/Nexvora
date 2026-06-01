@@ -10,7 +10,7 @@ const features = [
     description:
       "AI-powered interaction with smart engagement, conversational UI, and business guidance for 24/7 support.",
     tags: ["ChatGPT-style", "RAG Systems", "Smart Responses"],
-    gradient: "from-violet-600 to-purple-600",
+    gradient: "from-teal-500 to-emerald-500",
   },
   {
     icon: Target,
@@ -79,7 +79,7 @@ export function FeaturesSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-600/10 text-violet-400 text-sm mb-4 border border-violet-500/20">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 text-teal-300 text-sm mb-4 border border-teal-400/20">
             <Sparkles className="w-4 h-4" />
             Features
           </span>
@@ -103,19 +103,19 @@ export function FeaturesSection() {
             <motion.div
               key={feature.title}
               variants={itemVariants}
-              className="group glass rounded-2xl p-6 hover:border-violet-500/50 transition-all duration-500 hover:shadow-xl hover:shadow-violet-500/10 relative overflow-hidden"
+              className="group glass rounded-2xl p-6 hover:border-teal-400/50 transition-all duration-500 hover:shadow-xl hover:shadow-teal-400/10 relative overflow-hidden"
             >
               {/* Hover Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-600/[0.03] to-purple-600/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-br from-teal-500/[0.03] to-emerald-500/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
               {/* Icon */}
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-r from-violet-600/20 to-purple-600/20 border border-violet-500/30 mb-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 relative">
-                <feature.icon className="w-7 h-7 text-violet-400 group-hover:text-white transition-colors duration-500 relative z-10" />
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-r from-teal-500/20 to-emerald-500/20 border border-teal-400/30 mb-5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 relative">
+                <feature.icon className="w-7 h-7 text-teal-300 group-hover:text-white transition-colors duration-500 relative z-10" />
                 <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
               </div>
 
               {/* Title */}
-              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-violet-400 group-hover:to-purple-400 transition-all duration-500">
+              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-teal-300 group-hover:to-emerald-300 transition-all duration-500">
                 {feature.title}
               </h3>
 
@@ -129,7 +129,7 @@ export function FeaturesSection() {
                 {feature.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 text-xs rounded-full bg-zinc-800 text-zinc-400 border border-zinc-700 group-hover:bg-violet-500/10 group-hover:border-violet-500/30 group-hover:text-violet-300 transition-all duration-300"
+                    className="px-3 py-1 text-xs rounded-full bg-zinc-800 text-zinc-400 border border-zinc-700 group-hover:bg-teal-400/10 group-hover:border-teal-400/30 group-hover:text-teal-200 transition-all duration-300"
                   >
                     {tag}
                   </span>

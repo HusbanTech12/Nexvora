@@ -137,7 +137,7 @@ export function SettingsView() {
     <button
       onClick={onChange}
       className={`w-12 h-6 rounded-full relative transition-colors ${
-        enabled ? "bg-violet-600" : "bg-zinc-700"
+        enabled ? "bg-teal-500" : "bg-zinc-700"
       }`}
     >
       <span
@@ -170,7 +170,7 @@ export function SettingsView() {
             type="text"
             value={profile.business_name}
             onChange={(e) => setProfile({ ...profile, business_name: e.target.value })}
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-violet-500"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-teal-400"
           />
         </div>
         <div>
@@ -179,7 +179,7 @@ export function SettingsView() {
             type="text"
             value={profile.admin_name}
             onChange={(e) => setProfile({ ...profile, admin_name: e.target.value })}
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-violet-500"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-teal-400"
           />
         </div>
         <div>
@@ -188,13 +188,13 @@ export function SettingsView() {
             type="tel"
             value={profile.admin_phone}
             onChange={(e) => setProfile({ ...profile, admin_phone: e.target.value })}
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-violet-500"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-teal-400"
           />
         </div>
         <button
           onClick={saveProfile}
           disabled={saving}
-          className="px-6 py-2 bg-violet-600 hover:bg-violet-700 disabled:opacity-50 rounded-lg text-white transition-colors"
+          className="px-6 py-2 bg-teal-500 hover:bg-teal-600 disabled:opacity-50 rounded-lg text-white transition-colors"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>
@@ -250,7 +250,7 @@ export function SettingsView() {
         <button
           onClick={saveNotifications}
           disabled={saving}
-          className="px-6 py-2 bg-violet-600 hover:bg-violet-700 disabled:opacity-50 rounded-lg text-white transition-colors"
+          className="px-6 py-2 bg-teal-500 hover:bg-teal-600 disabled:opacity-50 rounded-lg text-white transition-colors"
         >
           {saving ? "Saving..." : "Save Settings"}
         </button>
@@ -265,7 +265,7 @@ export function SettingsView() {
             value={emailSettings.resend_api_key}
             onChange={(e) => setEmailSettings({ ...emailSettings, resend_api_key: e.target.value })}
             placeholder="re_xxxxx"
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-violet-500"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-teal-400"
           />
         </div>
         <div>
@@ -274,7 +274,7 @@ export function SettingsView() {
             type="email"
             value={emailSettings.from_email}
             onChange={(e) => setEmailSettings({ ...emailSettings, from_email: e.target.value })}
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-violet-500"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-teal-400"
           />
         </div>
         <div>
@@ -283,13 +283,13 @@ export function SettingsView() {
             type="email"
             value={emailSettings.notification_email}
             onChange={(e) => setEmailSettings({ ...emailSettings, notification_email: e.target.value })}
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-violet-500"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-teal-400"
           />
         </div>
         <button
           onClick={saveEmailSettings}
           disabled={saving}
-          className="px-6 py-2 bg-violet-600 hover:bg-violet-700 disabled:opacity-50 rounded-lg text-white transition-colors"
+          className="px-6 py-2 bg-teal-500 hover:bg-teal-600 disabled:opacity-50 rounded-lg text-white transition-colors"
         >
           {saving ? "Saving..." : "Save Email Settings"}
         </button>
@@ -304,7 +304,7 @@ export function SettingsView() {
             value={whatsappSettings.whatsapp_phone}
             onChange={(e) => setWhatsappSettings({ ...whatsappSettings, whatsapp_phone: e.target.value })}
             placeholder="+1234567890"
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-violet-500"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-teal-400"
           />
           <p className="text-xs text-zinc-500 mt-1">Phone number with country code for WhatsApp Business API</p>
         </div>
@@ -315,14 +315,14 @@ export function SettingsView() {
             value={whatsappSettings.whatsapp_token}
             onChange={(e) => setWhatsappSettings({ ...whatsappSettings, whatsapp_token: e.target.value })}
             placeholder="EAAxxxxxxxxx"
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-violet-500"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-teal-400"
           />
           <p className="text-xs text-zinc-500 mt-1">Get from Meta Developers Dashboard</p>
         </div>
         <button
           onClick={saveWhatsAppSettings}
           disabled={saving}
-          className="px-6 py-2 bg-violet-600 hover:bg-violet-700 disabled:opacity-50 rounded-lg text-white transition-colors"
+          className="px-6 py-2 bg-teal-500 hover:bg-teal-600 disabled:opacity-50 rounded-lg text-white transition-colors"
         >
           {saving ? "Saving..." : "Save WhatsApp Settings"}
         </button>
@@ -450,7 +450,7 @@ export function SettingsView() {
                 }}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                   activeTab === tab.id
-                    ? "bg-violet-600/20 text-violet-400"
+                    ? "bg-teal-500/20 text-teal-300"
                     : "text-zinc-400 hover:bg-zinc-800 hover:text-white"
                 }`}
               >

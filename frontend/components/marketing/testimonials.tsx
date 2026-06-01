@@ -51,7 +51,7 @@ export function TestimonialsSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-600/10 text-violet-400 text-sm mb-4">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 text-teal-300 text-sm mb-4">
             <Star className="w-4 h-4" />
             Testimonials
           </span>
@@ -75,11 +75,11 @@ export function TestimonialsSection() {
             <motion.div
               key={testimonial.author}
               variants={itemVariants}
-              className="glass rounded-2xl p-8 hover:border-violet-500/50 transition-all duration-300"
+              className="glass rounded-2xl p-8 hover:border-teal-400/50 transition-all duration-300"
             >
               {/* Quote Icon */}
               <div className="mb-4">
-                <Quote className="w-8 h-8 text-violet-500/50" />
+                <Quote className="w-8 h-8 text-teal-400/50" />
               </div>
 
               {/* Quote */}

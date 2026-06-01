@@ -24,7 +24,7 @@ export default function DashboardLayout({
           </p>
           <a
             href="/"
-            className="px-6 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg text-white transition-colors text-sm"
+            className="px-6 py-2 bg-teal-500 hover:bg-teal-600 rounded-lg text-white transition-colors text-sm"
           >
             Go to Homepage
           </a>

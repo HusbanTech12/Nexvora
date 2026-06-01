@@ -70,7 +70,7 @@ const clerkAppearance = {
       boxShadow: "0 0 0 3px rgba(139, 92, 246, 0.1)",
     },
     formButtonPrimary: {
-      background: "linear-gradient(135deg, #7c3aed, #8b5cf6, #a78bfa)",
+      background: "linear-gradient(135deg, #14b8a6, #2dd4bf, #5eead4)",
       border: "none",
       borderRadius: "10px",
       color: "#ffffff",
@@ -82,7 +82,7 @@ const clerkAppearance = {
       transition: "all 0.2s ease",
     },
     formButtonPrimary__hover: {
-      background: "linear-gradient(135deg, #6d28d9, #7c3aed, #8b5cf6)",
+      background: "linear-gradient(135deg, #0d9488, #14b8a6, #2dd4bf)",
       boxShadow: "0 4px 20px rgba(139, 92, 246, 0.4)",
     },
     footerActionText: {
@@ -90,7 +90,7 @@ const clerkAppearance = {
       fontSize: "13px",
     },
     footerActionLink: {
-      color: "#a78bfa",
+      color: "#5eead4",
       fontWeight: "500",
       textDecoration: "none",
     },
@@ -101,10 +101,10 @@ const clerkAppearance = {
       color: "#e4e4e7",
     },
     identityPreviewEditButton: {
-      color: "#a78bfa",
+      color: "#5eead4",
     },
     formResendCodeLink: {
-      color: "#a78bfa",
+      color: "#5eead4",
     },
     badge: {
       background: "rgba(139, 92, 246, 0.2)",
@@ -120,7 +120,7 @@ const clerkAppearance = {
     },
   },
   variables: {
-    colorPrimary: "#8b5cf6",
+    colorPrimary: "#2dd4bf",
     colorText: "#ffffff",
     colorTextSecondary: "#a1a1aa",
     colorBackground: "#18181b",
@@ -143,7 +143,7 @@ export default function SignInPage() {
             </p>
             <a
               href="/"
-              className="px-6 py-2 bg-violet-600 hover:bg-violet-700 rounded-lg text-white transition-colors text-sm"
+              className="px-6 py-2 bg-teal-500 hover:bg-teal-600 rounded-lg text-white transition-colors text-sm"
             >
               Go to Homepage
             </a>
@@ -160,8 +160,8 @@ export default function SignInPage() {
 
       {/* Gradient Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
       </div>
 
