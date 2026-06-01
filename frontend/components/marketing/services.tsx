@@ -87,7 +87,7 @@ export function ServicesSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-600/10 text-violet-400 text-sm mb-4">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 text-teal-300 text-sm mb-4">
             <Cpu className="w-4 h-4" />
             Services
           </span>
@@ -111,12 +111,12 @@ export function ServicesSection() {
             <motion.div
               key={service.title}
               variants={itemVariants}
-              className="group glass rounded-2xl p-8 hover:border-violet-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/10"
+              className="group glass rounded-2xl p-8 hover:border-teal-400/50 transition-all duration-300 hover:shadow-xl hover:shadow-teal-400/10"
             >
               {/* Header */}
               <div className="flex items-start gap-4 mb-6">
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-r from-violet-600/20 to-purple-600/20 border border-violet-500/30 group-hover:scale-110 transition-transform duration-300">
-                  <service.icon className="w-7 h-7 text-violet-400" />
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-r from-teal-500/20 to-emerald-500/20 border border-teal-400/30 group-hover:scale-110 transition-transform duration-300">
+                  <service.icon className="w-7 h-7 text-teal-300" />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-1">
@@ -130,8 +130,8 @@ export function ServicesSection() {
               <ul className="space-y-3 mb-6">
                 {service.items.map((item) => (
                   <li key={item} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-violet-600/20 flex items-center justify-center flex-shrink-0">
-                      <Check className="w-3 h-3 text-violet-400" />
+                    <div className="w-5 h-5 rounded-full bg-teal-500/20 flex items-center justify-center flex-shrink-0">
+                      <Check className="w-3 h-3 text-teal-300" />
                     </div>
                     <span className="text-zinc-300">{item}</span>
                   </li>
@@ -139,7 +139,7 @@ export function ServicesSection() {
               </ul>
 
               {/* CTA */}
-              <Button variant="outline" className="w-full group-hover:bg-violet-600 group-hover:border-violet-600">
+              <Button variant="outline" className="w-full group-hover:bg-teal-500 group-hover:border-teal-500">
                 {service.cta}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>

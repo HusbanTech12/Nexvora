@@ -10,13 +10,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-gradient-to-r from-violet-600 to-purple-600 text-white hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-violet-500/25",
+          "bg-gradient-to-r from-teal-500 to-emerald-500 text-white hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-teal-400/25",
         secondary:
           "bg-zinc-800 text-white hover:bg-zinc-700 border border-zinc-700",
         outline:
-          "border border-zinc-700 bg-transparent hover:bg-zinc-800 hover:border-violet-500",
+          "border border-zinc-700 bg-transparent hover:bg-zinc-800 hover:border-teal-400",
         ghost: "hover:bg-zinc-800 hover:text-white",
-        link: "text-violet-400 underline-offset-4 hover:underline",
+        link: "text-teal-300 underline-offset-4 hover:underline",
         destructive:
           "bg-red-600 text-white hover:bg-red-700",
         success:
