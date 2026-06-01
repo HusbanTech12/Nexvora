@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { motion, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +13,11 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
+
+const ParticleNetwork = dynamic(
+  () => import("@/components/ui/ParticleNetwork"),
+  { ssr: false }
+);
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -36,11 +42,16 @@ const itemVariants: Variants = {
   },
 };
 
+
+
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Mesh Gradient Background */}
       <div className="absolute inset-0 mesh-gradient" />
+
+      {/* Particle Network Background */}
+      <ParticleNetwork className="absolute inset-0 z-0" />
 
       {/* Noise Texture */}
       <div className="absolute inset-0 noise" />
@@ -57,11 +68,6 @@ export function HeroSection() {
         }}
       />
 
-      {/* Gradient Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-violet-600/15 rounded-full blur-[150px] animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-600/15 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: "2s" }} />
-      <div className="absolute top-1/3 right-1/3 w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[120px]" />
-
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 lg:py-32">
         <motion.div
           variants={containerVariants}
@@ -71,8 +77,8 @@ export function HeroSection() {
         >
           {/* Badge */}
           <motion.div variants={itemVariants} className="mb-8">
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass text-sm text-zinc-300 border-violet-500/30 animate-shimmer">
-              <Sparkles className="w-4 h-4 text-violet-400" />
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass text-sm text-zinc-300 border-teal-400/30 animate-shimmer">
+              <Sparkles className="w-4 h-4 text-teal-300" />
               AI-Powered Development Agency
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
             </span>
@@ -87,7 +93,7 @@ export function HeroSection() {
             <span className="gradient-text">AI-Powered Websites</span>
             <br />
             <span className="text-white">That Convert Visitors</span>
-            <span className="text-violet-400"> Into Customers</span>
+            <span className="text-teal-300"> Into Customers</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -109,7 +115,7 @@ export function HeroSection() {
                 Book Free Consultation
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Button>
             <Button size="xl" variant="outline" className="group">
               Explore Services
@@ -123,7 +129,7 @@ export function HeroSection() {
             className="relative max-w-5xl mx-auto"
           >
             {/* Dashboard Mockup */}
-            <div className="glass rounded-2xl border border-zinc-800/50 overflow-hidden shadow-2xl shadow-violet-500/20 hover:shadow-violet-500/30 transition-shadow duration-500">
+            <div className="glass rounded-2xl border border-zinc-800/50 overflow-hidden shadow-2xl shadow-teal-400/20 hover:shadow-teal-400/30 transition-shadow duration-500">
               {/* Dashboard Header */}
               <div className="flex items-center gap-4 px-5 py-3 border-b border-zinc-800/50 bg-zinc-900/50">
                 <div className="flex gap-2">
@@ -155,11 +161,11 @@ export function HeroSection() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.8 + i * 0.1 }}
-                      className="glass-light rounded-xl p-4 hover:border-violet-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/10 group"
+                      className="glass-light rounded-xl p-4 hover:border-teal-400/40 transition-all duration-300 hover:shadow-lg hover:shadow-teal-400/10 group"
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <div className="p-1.5 rounded-lg bg-violet-500/10 group-hover:bg-violet-500/20 transition-colors">
-                          <stat.icon className="w-4 h-4 text-violet-400" />
+                        <div className="p-1.5 rounded-lg bg-teal-400/10 group-hover:bg-teal-400/20 transition-colors">
+                          <stat.icon className="w-4 h-4 text-teal-300" />
                         </div>
                         <span className={`text-xs font-medium ${stat.positive ? "text-green-400" : "text-red-400"}`}>
                           {stat.change}
@@ -172,7 +178,7 @@ export function HeroSection() {
                 </div>
 
                 {/* Chart */}
-                <div className="lg:col-span-2 glass-light rounded-xl p-5 hover:border-violet-500/30 transition-all duration-300">
+                <div className="lg:col-span-2 glass-light rounded-xl p-5 hover:border-teal-400/30 transition-all duration-300">
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <div className="text-sm font-medium text-white">Lead Generation Trend</div>
@@ -184,25 +190,23 @@ export function HeroSection() {
                   </div>
                   <div className="flex items-end gap-1.5 h-32">
                     {[40, 60, 45, 70, 55, 80, 65, 90, 75, 85, 95, 100].map((h, i) => (
-                      <motion.div
+                      <div
                         key={i}
-                        initial={{ height: 0 }}
-                        animate={{ height: `${h}%` }}
-                        transition={{ delay: 1.2 + i * 0.05, duration: 0.4, ease: "easeOut" }}
-                        className="flex-1 bg-gradient-to-t from-violet-600 to-purple-400 rounded-t-sm hover:from-violet-500 hover:to-purple-300 transition-all duration-300 relative group/chart"
+                        className="flex-1 bg-gradient-to-t from-teal-500 to-emerald-300 rounded-t-sm hover:from-teal-400 hover:to-emerald-200 transition-all duration-300 relative group/chart"
+                        style={{ height: `${h}%` }}
                       >
                         <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-zinc-800 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover/chart:opacity-100 transition-opacity whitespace-nowrap">
                           {h} leads
                         </div>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                 </div>
 
                 {/* AI Chat Preview */}
-                <div className="glass-light rounded-xl p-5 hover:border-violet-500/30 transition-all duration-300 flex flex-col">
+                <div className="glass-light rounded-xl p-5 hover:border-teal-400/30 transition-all duration-300 flex flex-col">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-9 h-9 rounded-full bg-gradient-to-r from-violet-600 to-purple-600 flex items-center justify-center shadow-lg shadow-violet-500/20">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 flex items-center justify-center shadow-lg shadow-teal-400/20">
                       <Sparkles className="w-4 h-4 text-white" />
                     </div>
                     <div>
@@ -217,7 +221,7 @@ export function HeroSection() {
                     <div className="bg-zinc-800/50 rounded-xl px-3 py-2.5 text-xs text-zinc-300 max-w-[85%]">
                       Hi! I&apos;m your AI assistant. How can I help grow your business today?
                     </div>
-                    <div className="bg-violet-600/20 rounded-xl px-3 py-2.5 text-xs text-zinc-300 border border-violet-500/20 max-w-[85%] ml-auto">
+                    <div className="bg-teal-500/20 rounded-xl px-3 py-2.5 text-xs text-zinc-300 border border-teal-400/20 max-w-[85%] ml-auto">
                       I&apos;d like to learn about your AI development services
                     </div>
                     <div className="flex gap-1.5 items-center text-zinc-600 text-xs">
@@ -234,7 +238,7 @@ export function HeroSection() {
             <motion.div
               animate={{ y: [-8, 8, -8] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -left-6 top-1/4 glass rounded-xl p-2.5 border border-violet-500/30 shadow-lg shadow-violet-500/10"
+              className="absolute -left-6 top-1/4 glass rounded-xl p-2.5 border border-teal-400/30 shadow-lg shadow-teal-400/10"
             >
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
@@ -245,10 +249,10 @@ export function HeroSection() {
             <motion.div
               animate={{ y: [8, -8, 8] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute -right-6 bottom-1/4 glass rounded-xl p-2.5 border border-purple-500/30 shadow-lg shadow-purple-500/10"
+              className="absolute -right-6 bottom-1/4 glass rounded-xl p-2.5 border border-emerald-400/30 shadow-lg shadow-emerald-400/10"
             >
               <div className="flex items-center gap-2">
-                <MessageSquare className="w-4 h-4 text-purple-400" />
+                <MessageSquare className="w-4 h-4 text-emerald-300" />
                 <span className="text-[11px] text-zinc-300 font-medium">New inquiry received</span>
               </div>
             </motion.div>
@@ -271,7 +275,7 @@ export function HeroSection() {
         >
           <span className="text-[10px] text-zinc-600 uppercase tracking-widest">Scroll</span>
           <div className="w-5 h-8 rounded-full border-2 border-zinc-700 flex items-start justify-center p-1.5">
-            <motion.div className="w-1 h-2 bg-gradient-to-b from-violet-500 to-purple-500 rounded-full" />
+            <motion.div className="w-1 h-2 bg-gradient-to-b from-teal-400 to-emerald-400 rounded-full" />
           </div>
         </motion.div>
       </motion.div>

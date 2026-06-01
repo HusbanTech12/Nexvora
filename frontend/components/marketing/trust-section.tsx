@@ -17,6 +17,12 @@ const itemVariants: Variants = {
   show: { opacity: 1, y: 0 },
 };
 
+/* 
+  ANIMATION: animated-counter
+  PROPERTY:  none (React state update + DOM textContent)
+  THREAD:    main thread (textContent is cheap, no layout)
+  COST:      zero repaint — only updates text node
+*/
 function AnimatedCounter({ value, suffix = "" }: { value: string; suffix?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
@@ -26,19 +32,20 @@ function AnimatedCounter({ value, suffix = "" }: { value: string; suffix?: strin
   useEffect(() => {
     if (!isInView) return;
     const duration = 2000;
-    const steps = 60;
-    const increment = numValue / steps;
-    let current = 0;
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= numValue) {
-        setCount(numValue);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(current));
+    let start: number | null = null;
+    let rafId: number;
+
+    const step = (timestamp: number) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      setCount(Math.floor(progress * numValue));
+      if (progress < 1) {
+        rafId = requestAnimationFrame(step);
       }
-    }, duration / steps);
-    return () => clearInterval(timer);
+    };
+
+    rafId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(rafId);
   }, [isInView, numValue]);
 
   return (
@@ -98,8 +105,8 @@ export function TrustSection() {
               variants={itemVariants}
               className="text-center group"
             >
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-r from-violet-600/20 to-purple-600/20 border border-violet-500/30 mb-4 group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg group-hover:shadow-violet-500/20">
-                <stat.icon className="w-7 h-7 text-violet-400" />
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-r from-teal-500/20 to-emerald-500/20 border border-teal-400/30 mb-4 group-hover:scale-110 transition-transform duration-300 group-hover:shadow-lg group-hover:shadow-teal-400/20">
+                <stat.icon className="w-7 h-7 text-teal-300" />
               </div>
               <AnimatedCounter value={stat.value} suffix={stat.suffix} />
               <div className="text-sm text-zinc-400">{stat.label}</div>
@@ -119,11 +126,11 @@ export function TrustSection() {
             <motion.div
               key={feature.title}
               variants={itemVariants}
-              className="group glass rounded-2xl p-6 hover:border-violet-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/10 relative overflow-hidden"
+              className="group glass rounded-2xl p-6 hover:border-teal-400/50 transition-all duration-300 hover:shadow-lg hover:shadow-teal-400/10 relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-600/0 to-purple-600/0 group-hover:from-violet-600/5 group-hover:to-purple-600/5 transition-all duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-br from-teal-500/0 to-emerald-500/0 group-hover:from-teal-500/5 group-hover:to-emerald-500/5 transition-all duration-500" />
               <div className="relative z-10">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-800 group-hover:bg-gradient-to-r group-hover:from-violet-600 group-hover:to-purple-600 transition-all duration-300 mb-4">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-800 group-hover:bg-gradient-to-r group-hover:from-teal-500 group-hover:to-emerald-500 transition-all duration-300 mb-4">
                   <feature.icon className="w-6 h-6 text-zinc-400 group-hover:text-white transition-colors" />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">

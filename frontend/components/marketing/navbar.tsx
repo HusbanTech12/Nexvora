@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/shared/logo";
 import { useUser, useAuth, SignOutButton } from "@clerk/nextjs";
@@ -34,7 +34,7 @@ function ClerkNavItems({
           {isAdmin && (
             <a
               href="/dashboard"
-              className="text-sm font-medium text-violet-400 hover:text-violet-300 transition-colors"
+              className="text-sm font-medium text-teal-300 hover:text-teal-200 transition-colors"
             >
               Dashboard
             </a>
@@ -84,7 +84,7 @@ function ClerkMobileItems({
           {isAdmin && (
             <a
               href="/dashboard"
-              className="text-sm font-medium text-violet-400 hover:text-violet-300 transition-colors py-2"
+              className="text-sm font-medium text-teal-300 hover:text-teal-200 transition-colors py-2"
             >
               Dashboard
             </a>
@@ -122,9 +122,58 @@ function ScrollProgress() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 z-[60] h-[2px] bg-gradient-to-r from-violet-600 via-purple-500 to-violet-400 origin-left"
+      className="fixed top-0 left-0 right-0 z-[60] h-[2px] bg-gradient-to-r from-teal-500 via-emerald-400 to-teal-300 origin-left"
       style={{ scaleX }}
     />
+  );
+}
+
+/* 
+  ANIMATION: nav-gradient
+  PROPERTY:  opacity — compositor-safe
+  THREAD:    GPU
+  COST:      zero repaint
+*/
+function NavGradient() {
+  const { scrollY } = useScroll();
+  const opacity = useTransform(scrollY, [0, 100], [0, 0.12]);
+
+  return (
+    <motion.div
+      className="absolute inset-0 pointer-events-none"
+      style={{
+        opacity,
+        background: "linear-gradient(180deg, rgba(20, 184, 166, 0.08) 0%, rgba(16, 185, 129, 0.04) 50%, transparent 100%)",
+      }}
+    />
+  );
+}
+
+function ThemeToggle() {
+  const [light, setLight] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("homepage-theme");
+    setLight(saved === "light");
+    const handler = () => {
+      setLight((prev) => !prev);
+    };
+    window.addEventListener("toggle-home-theme", handler);
+    return () => window.removeEventListener("toggle-home-theme", handler);
+  }, []);
+
+  return (
+    <button
+      onClick={() => window.dispatchEvent(new CustomEvent("toggle-home-theme"))}
+      className="w-9 h-9 rounded-lg bg-zinc-800 flex items-center justify-center hover:bg-zinc-700 transition-colors"
+      aria-label="Toggle theme"
+    >
+      {light ? (
+        <Sun className="w-4 h-4 text-amber-400" />
+      ) : (
+        <Moon className="w-4 h-4 text-zinc-400" />
+      )}
+    </button>
   );
 }
 
@@ -136,12 +185,16 @@ function ClerkAwareNavbar() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+    let rafId: number;
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => setIsScrolled(window.scrollY > 20));
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -178,7 +231,8 @@ function ClerkAwareNavbar() {
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6">
+        <NavGradient />
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             <Logo showText={false} />
 
@@ -187,7 +241,7 @@ function ClerkAwareNavbar() {
                 <button
                   key={link.label}
                   onClick={() => handleNavClick(link)}
-                  className="text-sm font-medium text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-gradient-to-r after:from-violet-400 after:to-purple-400 after:transition-all after:duration-300 hover:after:w-full"
+                  className="text-sm font-medium text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-gradient-to-r after:from-teal-300 after:to-emerald-300 after:transition-all after:duration-300 hover:after:w-full"
                 >
                   {link.label}
                 </button>
@@ -195,6 +249,7 @@ function ClerkAwareNavbar() {
             </div>
 
             <div className="hidden md:flex items-center gap-4">
+              <ThemeToggle />
               <ClerkNavItems isSignedIn={!!isSignedIn} user={user} isAdmin={isAdmin} />
             </div>
 
@@ -231,6 +286,8 @@ function ClerkAwareNavbar() {
 
                   <ClerkMobileItems isSignedIn={!!isSignedIn} isAdmin={isAdmin} />
 
+                  <ThemeToggle />
+
                   <Button className="mt-2" onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))}>Book Consultation</Button>
                 </div>
               </motion.div>
@@ -247,12 +304,16 @@ function SimpleNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+    let rafId: number;
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => setIsScrolled(window.scrollY > 20));
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   const handleNavClick = (link: typeof navLinks[0]) => {
@@ -282,7 +343,8 @@ function SimpleNavbar() {
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6">
+        <NavGradient />
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             <Logo showText={false} />
 
@@ -291,7 +353,7 @@ function SimpleNavbar() {
                 <button
                   key={link.label}
                   onClick={() => handleNavClick(link)}
-                  className="text-sm font-medium text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-gradient-to-r after:from-violet-400 after:to-purple-400 after:transition-all after:duration-300 hover:after:w-full"
+                  className="text-sm font-medium text-zinc-400 hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-gradient-to-r after:from-teal-300 after:to-emerald-300 after:transition-all after:duration-300 hover:after:w-full"
                 >
                   {link.label}
                 </button>
@@ -299,6 +361,7 @@ function SimpleNavbar() {
             </div>
 
             <div className="hidden md:flex items-center gap-4">
+              <ThemeToggle />
               <Button size="sm" onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))}>
                 Book Consultation
               </Button>
@@ -335,6 +398,7 @@ function SimpleNavbar() {
                     </button>
                   ))}
 
+                  <ThemeToggle />
                   <Button className="mt-2" onClick={() => window.dispatchEvent(new CustomEvent("open-consultation"))}>Book Consultation</Button>
                 </div>
               </motion.div>
