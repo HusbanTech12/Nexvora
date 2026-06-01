@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, Users, MessageSquare, BarChart3, Settings, X } from "lucide-react";
+import { LogoIcon } from "@/components/shared/logo";
+
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -37,10 +39,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         }`}
       >
         <div className="p-6 border-b border-zinc-800 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-purple-600 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">N</span>
-            </div>
+          <Link href="/" className="flex items-center gap-3">
+            <LogoIcon />
             <span className="text-white font-bold">Nexvora</span>
           </Link>
           <button onClick={onClose} className="md:hidden text-zinc-400">
@@ -58,7 +58,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 onClick={onClose}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                   isActive
-                    ? "bg-violet-600/20 text-violet-400"
+                    ? "bg-teal-500/20 text-teal-300"
                     : "text-zinc-400 hover:bg-zinc-800 hover:text-white"
                 }`}
               >

@@ -3,31 +3,38 @@ import Image from "next/image";
 
 interface LogoProps {
   size?: "sm" | "md" | "lg";
+  variant?: "dark" | "light";
   showText?: boolean;
   className?: string;
 }
 
 const sizes = {
-  sm: { width: 32, height: 32 },
-  md: { width: 120, height: 40 },
-  lg: { width: 160, height: 53 },
+  sm: { w: 120, h: 36 },
+  md: { w: 160, h: 48 },
+  lg: { w: 200, h: 60 },
 };
 
-export function Logo({ size = "md", showText = true, className = "" }: LogoProps) {
-  const sizeClasses = sizes[size];
+const iconSizes = {
+  sm: 28,
+  md: 36,
+  lg: 44,
+};
+
+export function Logo({ size = "md", variant = "dark", showText = true, className = "" }: LogoProps) {
+  const dims = sizes[size];
+  const src = variant === "light" ? "/images/nexvora-logo-light.svg" : "/images/nexvora-logo.svg";
 
   return (
-    <Link href="/" className={`flex items-center gap-2 ${className}`}>
+    <Link href="/" className={`flex items-center gap-3 ${className}`}>
       <Image
-        src="/images/nexvora_logo_final (1).png"
-        alt=""
-        width={sizeClasses.width}
-        height={sizeClasses.height}
-        className="h-auto"
+        src={src}
+        alt="Nexvora"
+        width={dims.w}
+        height={dims.h}
         priority
       />
       {showText && (
-        <span className="font-bold text-white tracking-tight text-lg">
+        <span className={`font-bold tracking-tight text-lg ${variant === "light" ? "text-zinc-900" : "text-white"}`}>
           Nexvora
         </span>
       )}
@@ -35,15 +42,17 @@ export function Logo({ size = "md", showText = true, className = "" }: LogoProps
   );
 }
 
-// Icon-only version for favicon/footer
-export function LogoIcon({ className = "" }: { className?: string }) {
+export function LogoIcon({ size = "md", variant = "dark", className = "" }: { size?: "sm" | "md" | "lg"; variant?: "dark" | "light"; className?: string }) {
+  const px = iconSizes[size];
+  const src = variant === "light" ? "/images/nexvora-icon-light.svg" : "/images/nexvora-icon.svg";
+
   return (
     <Image
-      src="/images/nexvora_logo_final (1).png"
+      src={src}
       alt="Nexvora"
-      width={40}
-      height={40}
-      className={`h-auto ${className}`}
+      width={px}
+      height={px}
+      className={className}
     />
   );
 }
