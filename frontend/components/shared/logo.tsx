@@ -3,55 +3,67 @@ import Image from "next/image";
 
 interface LogoProps {
   size?: "sm" | "md" | "lg";
-  variant?: "dark" | "light";
   showText?: boolean;
   className?: string;
+  isScrolled?: boolean;
 }
 
 const sizes = {
-  sm: { w: 120, h: 36 },
-  md: { w: 160, h: 48 },
-  lg: { w: 200, h: 60 },
+  sm: { w: 32, h: 32 },
+  md: { w: 40, h: 40 },
+  lg: { w: 48, h: 48 },
 };
 
 const iconSizes = {
-  sm: 28,
-  md: 36,
-  lg: 44,
+  sm: { w: 24, h: 24 },
+  md: { w: 32, h: 32 },
+  lg: { w: 40, h: 40 },
 };
 
-export function Logo({ size = "md", variant = "dark", showText = true, className = "" }: LogoProps) {
+const LOGO_SRC = "/images/nexvora-icon.svg";
+
+export function Logo({ size = "md", showText = true, className = "", isScrolled = true }: LogoProps) {
   const dims = sizes[size];
-  const src = variant === "light" ? "/images/nexvora-logo-light.svg" : "/images/nexvora-logo.svg";
 
   return (
-    <Link href="/" className={`flex items-center gap-3 ${className}`}>
+    <Link
+      href="/"
+      className={`flex items-center gap-3 ${className}`}
+      style={!isScrolled ? { filter: "drop-shadow(0 0 6px rgba(0,229,160,0.4))" } : undefined}
+    >
       <Image
-        src={src}
+        src={LOGO_SRC}
         alt="Nexvora"
         width={dims.w}
         height={dims.h}
         priority
       />
       {showText && (
-        <span className={`font-bold tracking-tight text-lg ${variant === "light" ? "text-zinc-900" : "text-white"}`}>
-          Nexvora
-        </span>
+        <div className="flex flex-col">
+          <span
+            className="font-bold tracking-tight text-lg text-white"
+            style={!isScrolled ? { textShadow: "0 0 4px rgba(0,229,160,0.5)" } : undefined}
+          >
+            Nexvora
+          </span>
+          <span className="text-[10px] tracking-[0.2em] text-zinc-400 uppercase leading-tight">
+            CREATIVE AGENCY
+          </span>
+        </div>
       )}
     </Link>
   );
 }
 
-export function LogoIcon({ size = "md", variant = "dark", className = "" }: { size?: "sm" | "md" | "lg"; variant?: "dark" | "light"; className?: string }) {
-  const px = iconSizes[size];
-  const src = variant === "light" ? "/images/nexvora-icon-light.svg" : "/images/nexvora-icon.svg";
+export function LogoIcon({ size = "md", className = "" }: { size?: "sm" | "md" | "lg"; className?: string }) {
+  const dims = iconSizes[size];
 
   return (
     <Image
-      src={src}
+      src={LOGO_SRC}
       alt="Nexvora"
-      width={px}
-      height={px}
+      width={dims.w}
+      height={dims.h}
       className={className}
     />
   );

@@ -234,7 +234,7 @@ function ClerkAwareNavbar() {
         <NavGradient />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
-            <Logo showText={false} />
+            <Logo isScrolled={isScrolled} />
 
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
@@ -346,7 +346,7 @@ function SimpleNavbar() {
         <NavGradient />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
-            <Logo showText={false} />
+            <Logo isScrolled={isScrolled} />
 
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (

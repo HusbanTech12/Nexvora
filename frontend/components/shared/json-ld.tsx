@@ -6,7 +6,7 @@ export function JsonLd() {
     "@type": "Organization",
     name: "Nexvora",
     url: "https://nexvora.ai",
-    logo: "https://nexvora.ai/logo.png",
+    logo: "https://nexvora.ai/images/nexvora-icon.svg",
     description:
       "AI-powered web development agency building premium fullstack solutions with intelligent lead generation.",
     address: {

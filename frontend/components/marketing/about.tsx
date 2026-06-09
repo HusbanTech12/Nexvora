@@ -120,7 +120,7 @@ export function AboutSection() {
               <div className="relative glass-light rounded-xl p-6 border border-teal-400/30">
                 <div className="text-center">
                   <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                    <LogoIcon size="lg" variant="dark" />
+                    <LogoIcon size="lg" />
                   </div>
                   <h4 className="text-xl font-bold text-white mb-2">Nexvora</h4>
                   <p className="text-zinc-400 text-sm">AI-Powered Development Agency</p>
